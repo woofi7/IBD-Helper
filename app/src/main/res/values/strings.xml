@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">IBD Helper</string>
+    <string name="activity_main_day_txt_meal">Meal</string>
+    <string name="activity_main_day_txt_toilet">Bowel motion</string>
+    <string name="activity_main_day_txt_pain">Pain</string>
+    <string name="activity_main_group_day_monday">Monday</string>
+    <string name="activity_main_group_day_tuesday">Tuesday</string>
+    <string name="activity_main_group_day_wednesday">Wednesday</string>
+    <string name="activity_main_group_day_thursday">Thursday</string>
+    <string name="activity_main_group_day_friday">Friday</string>
+    <string name="activity_main_group_day_sunday">Sunday</string>
+    <string name="activity_main_group_day_saturday">Saturday</string>
+</resources>
