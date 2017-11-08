@@ -1,11 +1,15 @@
 package p55.a2017.bdeb.qc.ca.ibdhelper;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -65,24 +69,44 @@ public class MainActivity extends AppCompatActivity {
                     return;
             }
 
-            day = (TextView) group.findViewById(R.id.activity_main_group_txt_day);
-            date = (TextView) group.findViewById(R.id.activity_main_group_txt_date);
-            indicator = (ImageView) group.findViewById(R.id.activity_main_group_img_indicator);
+            day = group.findViewById(R.id.activity_main_group_txt_day);
+            date = group.findViewById(R.id.activity_main_group_txt_date);
+            indicator = group.findViewById(R.id.activity_main_group_img_indicator);
             groupDay = group.findViewById(R.id.activity_main_day);
             groupInfo = group.findViewById(R.id.activity_main_group_info);
 
-            mealTxt = (TextView) groupDay.findViewById(R.id.activity_main_day_txt_meal);
-            toiletTxt = (TextView) groupDay.findViewById(R.id.activity_main_day_txt_toilet);
-            painTxt = (TextView) groupDay.findViewById(R.id.activity_main_day_txt_pain);
-            mealBtn = (ImageButton) groupDay.findViewById(R.id.activity_main_day_imgbtn_meal);
-            toiletBtn = (ImageButton) groupDay.findViewById(R.id.activity_main_day_imgbtn_toilet);
-            painBtn = (ImageButton) groupDay.findViewById(R.id.activity_main_day_imgbtn_pain);
+            mealTxt = groupDay.findViewById(R.id.activity_main_day_txt_meal);
+            toiletTxt = groupDay.findViewById(R.id.activity_main_day_txt_toilet);
+            painTxt = groupDay.findViewById(R.id.activity_main_day_txt_pain);
+            mealBtn = groupDay.findViewById(R.id.activity_main_day_imgbtn_meal);
+            toiletBtn = groupDay.findViewById(R.id.activity_main_day_imgbtn_toilet);
+            painBtn = groupDay.findViewById(R.id.activity_main_day_imgbtn_pain);
 
             day.setText(enumDay.getText(this));
-            groupInfo.setContentDescription(enumDay.getId() + "");
+            groupInfo.setContentDescription(String.valueOf(enumDay.getId()));
 
             week[enumDay.getId()] = new Day(day, date, mealTxt, painTxt, toiletTxt, indicator,
-                    mealBtn, painBtn, toiletBtn, groupDay, groupInfo);
+                    mealBtn, painBtn, toiletBtn, groupDay, group, groupInfo);
         }
+
+        updateLayoutHeight();
+    }
+
+    private void updateLayoutHeight() {
+        final LinearLayout weeklayout = findViewById(R.id.activity_main_group_weeklayout);
+        final ConstraintLayout layout = findViewById(R.id.activity_main_group_layout);
+        final android.support.v7.widget.Toolbar toolbar = findViewById(R.id.activity_main_group_toolbar);
+
+        layout.post(new Runnable() {
+            @Override
+            public void run() {
+                int  height = (layout.getHeight() - toolbar.getHeight()) / 7;
+
+                week[0].setHeight(height);
+                week[1].setHeight(height);
+                Toast.makeText(MainActivity.this,  "Screen: " + layout.getHeight() + " Week: " + weeklayout.getHeight() + " Toolbar: " + toolbar.getHeight(), Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 }

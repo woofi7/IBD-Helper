@@ -1,8 +1,11 @@
 package p55.a2017.bdeb.qc.ca.ibdhelper;
 
+import android.support.constraint.ConstraintLayout;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,11 +20,12 @@ public class Day {
     private ImageButton painBtn;
     private ImageButton toiletBtn;
     private View groupDay;
+    private View group;
     private boolean isExpanded;
 
     public Day(TextView day, TextView date, TextView mealTxt, TextView painTxt, TextView toiletTxt,
                ImageView indicator, ImageButton mealBtn, ImageButton painBtn, ImageButton toiletBtn,
-               View groupDay, View groupInfo) {
+               View groupDay, View group, View groupInfo) {
         this.day = day;
         this.date = date;
         this.mealTxt = mealTxt;
@@ -32,6 +36,7 @@ public class Day {
         this.painBtn = painBtn;
         this.toiletBtn = toiletBtn;
         this.groupDay = groupDay;
+        this.group = group;
         this.isExpanded = false;
 
         groupInfo.setOnClickListener(new View.OnClickListener() {
@@ -119,5 +124,15 @@ public class Day {
 
     public ImageButton getToiletBtn() {
         return toiletBtn;
+    }
+
+    public View getGroup() {
+        return group;
+    }
+
+    public void setHeight(int height) {
+        ViewGroup.LayoutParams params = group.getLayoutParams();
+        params.height = height;
+        group.setLayoutParams(params);
     }
 }
