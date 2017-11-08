@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case SUNDAY:
                     group = findViewById(R.id.activity_main_group_sunday);
+
                     break;
                 default:
                     return;
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             day = group.findViewById(R.id.activity_main_group_txt_day);
             date = group.findViewById(R.id.activity_main_group_txt_date);
             indicator = group.findViewById(R.id.activity_main_group_img_indicator);
-            groupDay = group.findViewById(R.id.activity_main_day);
+            groupDay = group.findViewById(R.id.activity_main_day_group);
             groupInfo = group.findViewById(R.id.activity_main_group_info);
 
             mealTxt = groupDay.findViewById(R.id.activity_main_day_txt_meal);
@@ -85,8 +86,13 @@ public class MainActivity extends AppCompatActivity {
             day.setText(enumDay.getText(this));
             groupInfo.setContentDescription(String.valueOf(enumDay.getId()));
 
+            //Remove the bottom separator of the last element
+            if (enumDay == EnumDay.SUNDAY) {
+                group.findViewById(R.id.activity_main_group_border_bottom).setVisibility(View.GONE);
+            }
+
             week[enumDay.getId()] = new Day(day, date, mealTxt, painTxt, toiletTxt, indicator,
-                    mealBtn, painBtn, toiletBtn, groupDay, group, groupInfo);
+                    mealBtn, painBtn, toiletBtn, groupDay, groupInfo);
         }
 
         updateLayoutHeight();
@@ -102,8 +108,9 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 int  height = (layout.getHeight() - toolbar.getHeight()) / 7;
 
-                week[0].setHeight(height);
-                week[1].setHeight(height);
+                for (Day day : week) {
+                    day.setHeight(height);
+                }
                 Toast.makeText(MainActivity.this,  "Screen: " + layout.getHeight() + " Week: " + weeklayout.getHeight() + " Toolbar: " + toolbar.getHeight(), Toast.LENGTH_LONG).show();
             }
         });

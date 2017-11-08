@@ -10,4 +10,6 @@
     <string name="activity_main_group_day_friday">Friday</string>
     <string name="activity_main_group_day_sunday">Sunday</string>
     <string name="activity_main_group_day_saturday">Saturday</string>
+    <string name="title_activity_pain">Pain</string>
+    <string name="activity_pain_icon_description">Abdominal pain icon.</string>
 </resources>

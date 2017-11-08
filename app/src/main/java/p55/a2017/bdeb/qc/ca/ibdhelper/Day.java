@@ -1,13 +1,14 @@
 package p55.a2017.bdeb.qc.ca.ibdhelper;
 
-import android.support.constraint.ConstraintLayout;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import p55.a2017.bdeb.qc.ca.ibdhelper.Pain.PainActivity;
 
 public class Day {
     private TextView day;
@@ -20,12 +21,12 @@ public class Day {
     private ImageButton painBtn;
     private ImageButton toiletBtn;
     private View groupDay;
-    private View group;
+    private View groupInfo;
     private boolean isExpanded;
 
     public Day(TextView day, TextView date, TextView mealTxt, TextView painTxt, TextView toiletTxt,
                ImageView indicator, ImageButton mealBtn, ImageButton painBtn, ImageButton toiletBtn,
-               View groupDay, View group, View groupInfo) {
+                View groupDay, final View groupInfo) {
         this.day = day;
         this.date = date;
         this.mealTxt = mealTxt;
@@ -36,7 +37,7 @@ public class Day {
         this.painBtn = painBtn;
         this.toiletBtn = toiletBtn;
         this.groupDay = groupDay;
-        this.group = group;
+        this.groupInfo = groupInfo;
         this.isExpanded = false;
 
         groupInfo.setOnClickListener(new View.OnClickListener() {
@@ -65,8 +66,8 @@ public class Day {
         painBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Open pain activity", Toast.LENGTH_SHORT).show();
-                //TODO: Make the pain module
+                Intent intent = new Intent(groupInfo.getContext(), PainActivity.class);
+                groupInfo.getContext().startActivity(intent);
             }
         });
     }
@@ -126,13 +127,9 @@ public class Day {
         return toiletBtn;
     }
 
-    public View getGroup() {
-        return group;
-    }
-
     public void setHeight(int height) {
-        ViewGroup.LayoutParams params = group.getLayoutParams();
+        ViewGroup.LayoutParams params = groupInfo.getLayoutParams();
         params.height = height;
-        group.setLayoutParams(params);
+        groupInfo.setLayoutParams(params);
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activiti_main_day"
+    android:id="@+id/activity_main_day"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -59,8 +59,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="0dp"
         android:clickable="true"
+        android:focusable="true"
         android:text="@string/activity_main_day_txt_pain"
         android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0.515"
@@ -76,6 +76,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="0dp"
         android:clickable="true"
+        android:focusable="true"
         android:text="@string/activity_main_day_txt_toilet"
         android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0.52"
@@ -91,6 +92,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="0dp"
         android:clickable="true"
+        android:focusable="true"
         android:text="@string/activity_main_day_txt_meal"
         android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0.51"
