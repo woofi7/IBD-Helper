@@ -13,9 +13,9 @@
     <string name="title_activity_pain">Pain</string>
     <string name="activity_pain_icon_description">Abdominal pain icon.</string>
     <string-array name="activity_pain_painType">
-        <item name="cramp">Cramp</item>
-        <item name="sting">Sting</item>
-        <item name="burn">Burn</item>
+        <item name="type1">Type 1</item>
+        <item name="type2">Type 2</item>
+        <item name="type3">Type 3</item>
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
