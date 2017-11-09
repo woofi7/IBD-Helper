@@ -16,8 +16,6 @@ import p55.a2017.bdeb.qc.ca.ibdhelper.R;
 
 public class PainActivity extends AppCompatActivity {
 
-    private CustomProgressSeekbar seekbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,31 +31,5 @@ public class PainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-        seekbar = findViewById(R.id.seekBar2);
-        initDataToSeekbar();
     }
-
-    private void initDataToSeekbar() {
-        ArrayList<ProgressItem> progressItemList = new ArrayList<>();
-        // Green bar
-        ProgressItem mProgressItem = new ProgressItem();
-        mProgressItem.progressItemPercentage = 30;
-        mProgressItem.color = R.color.seekBarNone;
-        progressItemList.add(mProgressItem);
-        // Orange bar
-        mProgressItem = new ProgressItem();
-        mProgressItem.progressItemPercentage = 50;
-        mProgressItem.color = R.color.seekBarUncomfortable;
-        progressItemList.add(mProgressItem);
-        // Red bar
-        mProgressItem = new ProgressItem();
-        mProgressItem.progressItemPercentage = 20;
-        mProgressItem.color = R.color.seekBarAgonizing;
-        progressItemList.add(mProgressItem);
-
-        seekbar.initData(progressItemList);
-        seekbar.invalidate();
-    }
-
 }

@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
             //Remove the bottom separator of the last element
             if (enumDay == EnumDay.SUNDAY) {
-                group.findViewById(R.id.activity_main_group_border_bottom).setVisibility(View.GONE);
+                //group.findViewById(R.id.activity_main_group_border_bottom).setVisibility(View.GONE);
             }
 
             week[enumDay.getId()] = new Day(day, date, mealTxt, painTxt, toiletTxt, indicator,
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         layout.post(new Runnable() {
             @Override
             public void run() {
-                int  height = (layout.getHeight() - toolbar.getHeight()) / 7;
+                int  height = (layout.getHeight() - toolbar.getHeight() - week[0].getGroupInfo().getHeight() * 2) / 7;
 
                 for (Day day : week) {
                     day.setHeight(height);

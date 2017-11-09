@@ -127,6 +127,14 @@ public class Day {
         return toiletBtn;
     }
 
+    public View getGroupDay() {
+        return groupDay;
+    }
+
+    public View getGroupInfo() {
+        return groupInfo;
+    }
+
     public void setHeight(int height) {
         ViewGroup.LayoutParams params = groupInfo.getLayoutParams();
         params.height = height;
