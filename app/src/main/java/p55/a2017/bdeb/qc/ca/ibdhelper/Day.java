@@ -1,16 +1,20 @@
 package p55.a2017.bdeb.qc.ca.ibdhelper;
 
 import android.content.Intent;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Observable;
+
 import p55.a2017.bdeb.qc.ca.ibdhelper.Pain.PainActivity;
 
 public class Day {
+    public final EnumDay enumDay;
     private TextView day;
     private TextView date;
     private TextView mealTxt;
@@ -20,13 +24,23 @@ public class Day {
     private ImageButton mealBtn;
     private ImageButton painBtn;
     private ImageButton toiletBtn;
+    private View group;
     private View groupDay;
     private View groupInfo;
     private boolean isExpanded;
 
-    public Day(TextView day, TextView date, TextView mealTxt, TextView painTxt, TextView toiletTxt,
+    public class SelectEvent extends Observable {
+        public void select() {
+            this.setChanged();
+            this.notifyObservers();
+        }
+    }
+    public SelectEvent onSelected = new SelectEvent();
+
+    public Day(EnumDay enumDay, TextView day, TextView date, TextView mealTxt, TextView painTxt, TextView toiletTxt,
                ImageView indicator, ImageButton mealBtn, ImageButton painBtn, ImageButton toiletBtn,
-                View groupDay, final View groupInfo) {
+                 View group) {
+        this.enumDay = enumDay;
         this.day = day;
         this.date = date;
         this.mealTxt = mealTxt;
@@ -36,14 +50,16 @@ public class Day {
         this.mealBtn = mealBtn;
         this.painBtn = painBtn;
         this.toiletBtn = toiletBtn;
-        this.groupDay = groupDay;
-        this.groupInfo = groupInfo;
+        this.group = group;
+        this.groupDay = group.findViewById(R.id.activity_main_day_group);
+        this.groupInfo = group.findViewById(R.id.activity_main_group_info);
+
         this.isExpanded = false;
 
-        groupInfo.setOnClickListener(new View.OnClickListener() {
+        group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                expand();
+                onSelected.select();
             }
         });
 
@@ -75,24 +91,23 @@ public class Day {
     /**
      * Afficher les éléments de la journée.
      */
-    private void expand() {
-        if (isExpanded) {
-            collapse();
-        }
-        else {
-            this.indicator.setBackgroundResource(R.drawable.ic_expand_less_black_48dp);
-            this.groupDay.setVisibility(View.VISIBLE);
-            isExpanded = true;
-        }
+    public void expand() {
+        this.indicator.setBackgroundResource(R.drawable.ic_expand_less_black_24dp);
+        this.groupDay.setVisibility(View.VISIBLE);
+        //this.group.setBackground(null);
     }
 
     /**
      * Cacher les éléments de la journée.
      */
-    private void collapse() {
-        this.indicator.setBackgroundResource(R.drawable.ic_expand_more_black_48dp);
+    public void collapse() {
+        this.indicator.setBackgroundResource(R.drawable.ic_expand_more_black_24dp);
         this.groupDay.setVisibility(View.GONE);
-        isExpanded = false;
+        //int[] attrs = new int[] { android.R.attr.selectableItemBackground};
+        //TypedArray ta = this.group.getContext().obtainStyledAttributes(attrs);
+        //Drawable drawableFromTheme = ta.getDrawable(0);
+        //ta.recycle();
+        //this.group.setBackground(drawableFromTheme);
     }
 
     public TextView getDay() {
@@ -125,19 +140,5 @@ public class Day {
 
     public ImageButton getToiletBtn() {
         return toiletBtn;
-    }
-
-    public View getGroupDay() {
-        return groupDay;
-    }
-
-    public View getGroupInfo() {
-        return groupInfo;
-    }
-
-    public void setHeight(int height) {
-        ViewGroup.LayoutParams params = groupInfo.getLayoutParams();
-        params.height = height;
-        groupInfo.setLayoutParams(params);
     }
 }

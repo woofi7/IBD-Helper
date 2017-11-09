@@ -11,6 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Observable;
+import java.util.Observer;
+
 public class MainActivity extends AppCompatActivity {
 
     private Day week[];
@@ -23,6 +26,16 @@ public class MainActivity extends AppCompatActivity {
         initialiseWeek();
     }
 
+    private void setDay(EnumDay day) {
+        for (Day dayComponent : week) {
+            if (dayComponent.enumDay == day) {
+                dayComponent.expand();
+            }
+            else {
+                dayComponent.collapse();
+            }
+        }
+    }
     /**
      * Initialiser l'ensemble des journées en leur assignant leurs éléments d'interface.
      */
@@ -42,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton toiletBtn;
         ImageButton painBtn;
 
-        for (EnumDay enumDay : EnumDay.values()) {
+        for (final EnumDay enumDay : EnumDay.values()) {
             switch (enumDay) {
                 case MONDAY:
                     group = findViewById(R.id.activity_main_group_monday);
@@ -88,32 +101,17 @@ public class MainActivity extends AppCompatActivity {
 
             //Remove the bottom separator of the last element
             if (enumDay == EnumDay.SUNDAY) {
-                //group.findViewById(R.id.activity_main_group_border_bottom).setVisibility(View.GONE);
+                group.findViewById(R.id.activity_main_group_border_bottom).setVisibility(View.GONE);
             }
 
-            week[enumDay.getId()] = new Day(day, date, mealTxt, painTxt, toiletTxt, indicator,
-                    mealBtn, painBtn, toiletBtn, groupDay, groupInfo);
-        }
-
-        updateLayoutHeight();
-    }
-
-    private void updateLayoutHeight() {
-        final LinearLayout weeklayout = findViewById(R.id.activity_main_group_weeklayout);
-        final ConstraintLayout layout = findViewById(R.id.activity_main_group_layout);
-        final android.support.v7.widget.Toolbar toolbar = findViewById(R.id.activity_main_group_toolbar);
-
-        layout.post(new Runnable() {
-            @Override
-            public void run() {
-                int  height = (layout.getHeight() - toolbar.getHeight() - week[0].getGroupInfo().getHeight() * 2) / 7;
-
-                for (Day day : week) {
-                    day.setHeight(height);
+            week[enumDay.getId()] = new Day(enumDay, day, date, mealTxt, painTxt, toiletTxt, indicator,
+                    mealBtn, painBtn, toiletBtn, group);
+            week[enumDay.getId()].onSelected.addObserver(new Observer() {
+                @Override
+                public void update(Observable o, Object arg) {
+                    setDay(enumDay);
                 }
-                Toast.makeText(MainActivity.this,  "Screen: " + layout.getHeight() + " Week: " + weeklayout.getHeight() + " Toolbar: " + toolbar.getHeight(), Toast.LENGTH_LONG).show();
-            }
-        });
-
+            });
+        }
     }
 }
