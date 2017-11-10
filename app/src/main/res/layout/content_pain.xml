@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="p55.a2017.bdeb.qc.ca.ibdhelper.Pain.PainActivity"
     tools:showIn="@layout/activity_pain">
@@ -45,68 +46,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_pain_img_icon">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="12dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/activity_pain_txt_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="13h00 - 16h00"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/activity_pain_img_indicator"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/activity_pain_img_indicator" />
-
-                <ImageButton
-                    android:id="@+id/activity_pain_btn_edit_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:background="@android:color/transparent"
-                    app:srcCompat="@drawable/ic_mode_edit_black_24dp" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/activity_pain_img_indicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_weight="0"
-                android:background="@drawable/ic_expand_more_black_48dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                
-                app:layout_constraintTop_toTopOf="parent" />
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/activity_pain_separator"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_weight="0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/activity_pain_img_indicator"
-            app:srcCompat="@android:color/darker_gray" />
-
-        <include layout="@layout/fragment_activity_pain_info"/>
+        <include layout="@layout/fragment_activity_pain_card" />
+        <include layout="@layout/fragment_activity_pain_card" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

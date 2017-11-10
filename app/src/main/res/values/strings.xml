@@ -23,4 +23,5 @@
     <string name="activity_pain_intensity_tag">Intensity</string>
     <string name="activity_pain_type_tag">Type</string>
     <string name="activity_pain_location_tag">Location</string>
+    <string name="activity_pain_day_moment_morning">Morning</string>
 </resources>
