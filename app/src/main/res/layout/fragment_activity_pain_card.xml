@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="p55.a2017.bdeb.qc.ca.ibdhelper.activity_pain_card">
+    tools:context="p55.a2017.bdeb.qc.ca.ibdhelper.FragmentPainCard">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/activity_pain_pct_info_shema"
+                android:id="@+id/activity_pain_pct_info_schema"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginBottom="8dp"
@@ -56,16 +56,6 @@
                 android:visibility="visible" />
 
         </LinearLayout>
-
-        <include
-            layout="@layout/fragment_activity_pain_card_edit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -84,8 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:orientation="horizontal"
-                android:paddingTop="8dp">
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/activity_pain_btn_delete"
