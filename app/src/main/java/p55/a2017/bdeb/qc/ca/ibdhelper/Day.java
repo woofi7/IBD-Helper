@@ -1,17 +1,16 @@
 package p55.a2017.bdeb.qc.ca.ibdhelper;
 
 import android.content.Intent;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Observable;
+import java.util.Observer;
 
 import p55.a2017.bdeb.qc.ca.ibdhelper.Pain.PainActivity;
+import p55.a2017.bdeb.qc.ca.ibdhelper.util.EventEmitter;
 
 public class Day {
     public final EnumDay enumDay;
@@ -29,13 +28,7 @@ public class Day {
     private View groupInfo;
     private boolean isExpanded;
 
-    public class SelectEvent extends Observable {
-        public void select() {
-            this.setChanged();
-            this.notifyObservers();
-        }
-    }
-    public SelectEvent onSelected = new SelectEvent();
+    private EventEmitter onSelected = new EventEmitter();
 
     public Day(EnumDay enumDay, TextView day, TextView date, TextView mealTxt, TextView painTxt, TextView toiletTxt,
                ImageView indicator, ImageButton mealBtn, ImageButton painBtn, ImageButton toiletBtn,
@@ -59,7 +52,7 @@ public class Day {
         group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onSelected.select();
+                onSelected.next();
             }
         });
 
@@ -86,6 +79,10 @@ public class Day {
                 groupInfo.getContext().startActivity(intent);
             }
         });
+    }
+
+    public void setOnSelectListener(Observer e) {
+        onSelected.addObserver(e);
     }
 
     /**

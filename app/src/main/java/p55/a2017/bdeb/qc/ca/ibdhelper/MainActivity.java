@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
             week[enumDay.getId()] = new Day(enumDay, day, date, mealTxt, painTxt, toiletTxt, indicator,
                     mealBtn, painBtn, toiletBtn, group);
-            week[enumDay.getId()].onSelected.addObserver(new Observer() {
+            week[enumDay.getId()].setOnSelectListener(new Observer() {
                 @Override
                 public void update(Observable o, Object arg) {
                     setDay(enumDay);

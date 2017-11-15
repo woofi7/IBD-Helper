@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="p55.a2017.bdeb.qc.ca.ibdhelper.FragmentPainCard">
+    tools:context="p55.a2017.bdeb.qc.ca.ibdhelper.Pain.FragmentPainCard">
 
     <LinearLayout
         android:layout_width="match_parent"

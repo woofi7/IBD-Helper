@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="p55.a2017.bdeb.qc.ca.ibdhelper.Pain.PainActivity"
-    tools:showIn="@layout/activity_pain">
+    tools:showIn="@layout/activity_pain"
+    android:background="@color/backgroundColor">
 
 
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/backgroundColor">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/activity_pain_img_icon"
@@ -55,14 +55,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_pain_img_icon">
 
-        <include layout="@layout/fragment_activity_pain_card" />
-
-        <include layout="@layout/fragment_activity_pain_card_edit" />
-
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/fragment_activity_pain_card"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
