@@ -81,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         expandCurrentDay();
+        week[4].disableDay();
+        week[5].disableDay();
+        week[6].disableDay();
     }
 
     private void expandCurrentDay() {

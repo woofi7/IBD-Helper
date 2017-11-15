@@ -1,6 +1,7 @@
 package p55.a2017.bdeb.qc.ca.ibdhelper;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -30,6 +31,7 @@ public class Day {
     private boolean isExpanded;
 
     private Date date;
+    private boolean disable;
 
     private EventEmitter onSelected = new EventEmitter();
 
@@ -63,7 +65,8 @@ public class Day {
         group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onSelected.next();
+                if (!disable)
+                    onSelected.next();
             }
         });
 
@@ -90,6 +93,11 @@ public class Day {
                 groupInfo.getContext().startActivity(intent);
             }
         });
+    }
+
+    public void disableDay() {
+        group.setBackgroundColor(Color.LTGRAY);
+        this.disable = true;
     }
 
     public void setOnSelectListener(Observer e) {
