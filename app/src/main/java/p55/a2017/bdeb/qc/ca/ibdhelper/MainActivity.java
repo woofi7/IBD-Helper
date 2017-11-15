@@ -1,16 +1,15 @@
 package p55.a2017.bdeb.qc.ca.ibdhelper;
 
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -42,20 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private void initialiseWeek() {
         week = new Day[EnumDay.values().length];
 
-        View group;
-        View groupDay;
-        View groupInfo;
-        TextView day;
-        TextView date;
-        TextView mealTxt;
-        TextView toiletTxt;
-        TextView painTxt;
-        ImageView indicator;
-        ImageButton mealBtn;
-        ImageButton toiletBtn;
-        ImageButton painBtn;
-
         for (final EnumDay enumDay : EnumDay.values()) {
+            View group;
             switch (enumDay) {
                 case MONDAY:
                     group = findViewById(R.id.activity_main_group_monday);
@@ -83,35 +70,26 @@ public class MainActivity extends AppCompatActivity {
                     return;
             }
 
-            day = group.findViewById(R.id.activity_main_group_txt_day);
-            date = group.findViewById(R.id.activity_main_group_txt_date);
-            indicator = group.findViewById(R.id.activity_main_group_img_indicator);
-            groupDay = group.findViewById(R.id.activity_main_day_group);
-            groupInfo = group.findViewById(R.id.activity_main_group_info);
-
-            mealTxt = groupDay.findViewById(R.id.activity_main_day_txt_meal);
-            toiletTxt = groupDay.findViewById(R.id.activity_main_day_txt_toilet);
-            painTxt = groupDay.findViewById(R.id.activity_main_day_txt_pain);
-            mealBtn = groupDay.findViewById(R.id.activity_main_day_imgbtn_meal);
-            toiletBtn = groupDay.findViewById(R.id.activity_main_day_imgbtn_toilet);
-            painBtn = groupDay.findViewById(R.id.activity_main_day_imgbtn_pain);
-
-            day.setText(enumDay.getText(this));
-            groupInfo.setContentDescription(String.valueOf(enumDay.getId()));
-
-            //Remove the bottom separator of the last element
-            if (enumDay == EnumDay.SUNDAY) {
-                group.findViewById(R.id.activity_main_group_border_bottom).setVisibility(View.GONE);
-            }
-
-            week[enumDay.getId()] = new Day(enumDay, day, date, mealTxt, painTxt, toiletTxt, indicator,
-                    mealBtn, painBtn, toiletBtn, group);
+            week[enumDay.getId()] = new Day(enumDay, group);
             week[enumDay.getId()].setOnSelectListener(new Observer() {
                 @Override
                 public void update(Observable o, Object arg) {
                     setDay(enumDay);
                 }
             });
+
         }
+
+        expandCurrentDay();
+    }
+
+    private void expandCurrentDay() {
+        //todo: aligner les date de la lib et de l'enum plus clean?
+        Calendar calendar = Calendar.getInstance();
+        int currentDay = calendar.get(Calendar.DAY_OF_WEEK) - 2;
+        if (currentDay == -1)
+            currentDay = EnumDay.SUNDAY.getId();
+
+        week[currentDay].expand();
     }
 }

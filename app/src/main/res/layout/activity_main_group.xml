@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
-                android:layout_weight="4"
+                android:layout_weight="3"
                 android:paddingLeft="24dp"
                 android:paddingRight="24dp"
                 android:text="@string/activity_main_group_day_monday"

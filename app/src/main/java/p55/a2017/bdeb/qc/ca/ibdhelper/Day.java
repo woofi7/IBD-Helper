@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Date;
 import java.util.Observer;
 
 import p55.a2017.bdeb.qc.ca.ibdhelper.Pain.PainActivity;
@@ -14,8 +15,8 @@ import p55.a2017.bdeb.qc.ca.ibdhelper.util.EventEmitter;
 
 public class Day {
     public final EnumDay enumDay;
-    private TextView day;
-    private TextView date;
+    private TextView dayTxt;
+    private TextView dateTxt;
     private TextView mealTxt;
     private TextView painTxt;
     private TextView toiletTxt;
@@ -28,24 +29,34 @@ public class Day {
     private View groupInfo;
     private boolean isExpanded;
 
+    private Date date;
+
     private EventEmitter onSelected = new EventEmitter();
 
-    public Day(EnumDay enumDay, TextView day, TextView date, TextView mealTxt, TextView painTxt, TextView toiletTxt,
-               ImageView indicator, ImageButton mealBtn, ImageButton painBtn, ImageButton toiletBtn,
-                 View group) {
+    public Day(EnumDay enumDay, View group) {
         this.enumDay = enumDay;
-        this.day = day;
-        this.date = date;
-        this.mealTxt = mealTxt;
-        this.painTxt = painTxt;
-        this.toiletTxt = toiletTxt;
-        this.indicator = indicator;
-        this.mealBtn = mealBtn;
-        this.painBtn = painBtn;
-        this.toiletBtn = toiletBtn;
         this.group = group;
-        this.groupDay = group.findViewById(R.id.activity_main_day_group);
-        this.groupInfo = group.findViewById(R.id.activity_main_group_info);
+
+        this.dayTxt = this.group.findViewById(R.id.activity_main_group_txt_day);
+        this.dateTxt = this.group.findViewById(R.id.activity_main_group_txt_date);
+        this.indicator = this.group.findViewById(R.id.activity_main_group_img_indicator);
+        this.groupDay = this.group.findViewById(R.id.activity_main_day_group);
+        this.groupInfo = this.group.findViewById(R.id.activity_main_group_info);
+
+        this.mealTxt = this.groupDay.findViewById(R.id.activity_main_day_txt_meal);
+        this.toiletTxt = this.groupDay.findViewById(R.id.activity_main_day_txt_toilet);
+        this.painTxt = this.groupDay.findViewById(R.id.activity_main_day_txt_pain);
+        this.mealBtn = this.groupDay.findViewById(R.id.activity_main_day_imgbtn_meal);
+        this.toiletBtn = this.groupDay.findViewById(R.id.activity_main_day_imgbtn_toilet);
+        this.painBtn = this.groupDay.findViewById(R.id.activity_main_day_imgbtn_pain);
+
+        this.dayTxt.setText(enumDay.getText(this.group.getContext()));
+        this.groupInfo.setContentDescription(String.valueOf(enumDay.getId()));
+
+        //Remove the bottom separator of the last element
+        if (enumDay == EnumDay.SUNDAY) {
+            this.group.findViewById(R.id.activity_main_group_border_bottom).setVisibility(View.GONE);
+        }
 
         this.isExpanded = false;
 
@@ -107,12 +118,12 @@ public class Day {
         //this.group.setBackground(drawableFromTheme);
     }
 
-    public TextView getDay() {
-        return day;
+    public TextView getDayTxt() {
+        return dayTxt;
     }
 
-    public TextView getDate() {
-        return date;
+    public TextView getDateTxt() {
+        return dateTxt;
     }
 
     public TextView getMealTxt() {
