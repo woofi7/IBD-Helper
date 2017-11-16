@@ -3,13 +3,8 @@ package p55.a2017.bdeb.qc.ca.ibdhelper;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -41,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
     private void initialiseWeek() {
         week = new Day[EnumDay.values().length];
 
+        Calendar calendar = Calendar.getInstance();
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        EnumDay currentDay = EnumDay.fromDayOfWeek(dayOfWeek);
+
         for (final EnumDay enumDay : EnumDay.values()) {
             View group;
             switch (enumDay) {
@@ -70,29 +69,20 @@ public class MainActivity extends AppCompatActivity {
                     return;
             }
 
-            week[enumDay.getId()] = new Day(enumDay, group);
-            week[enumDay.getId()].setOnSelectListener(new Observer() {
+            int difference = enumDay.getId() - currentDay.getId();
+            calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, difference);
+
+            Day day = new Day(enumDay, group, calendar.getTime());
+            day.setEnable(difference <= 0);
+            day.setOnSelectListener(new Observer() {
                 @Override
                 public void update(Observable o, Object arg) {
                     setDay(enumDay);
                 }
             });
-
+            week[enumDay.getId()] = day;
         }
-
-        expandCurrentDay();
-        week[4].disableDay();
-        week[5].disableDay();
-        week[6].disableDay();
-    }
-
-    private void expandCurrentDay() {
-        //todo: aligner les date de la lib et de l'enum plus clean?
-        Calendar calendar = Calendar.getInstance();
-        int currentDay = calendar.get(Calendar.DAY_OF_WEEK) - 2;
-        if (currentDay == -1)
-            currentDay = EnumDay.SUNDAY.getId();
-
-        week[currentDay].expand();
+        week[currentDay.getId()].expand();
     }
 }

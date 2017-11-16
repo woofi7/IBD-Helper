@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="p55.a2017.bdeb.qc.ca.ibdhelper.Pain.FragmentPainCardInfo">
+    tools:context="p55.a2017.bdeb.qc.ca.ibdhelper.Pain.FragmentPainCardEdit">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -202,7 +202,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
-                        android:text="Delete" />
+                        android:text="@string/activity_pain_card_btn_delete_txt" />
 
                     <ImageView
                         android:id="@+id/imageView3"
@@ -217,7 +217,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
-                        android:text="Save" />
+                        android:text="@string/activity_pain_card_btn_save_txt" />
 
                 </LinearLayout>
             </LinearLayout>
