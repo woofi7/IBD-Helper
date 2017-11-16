@@ -26,16 +26,14 @@
                 android:layout_weight="0"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/activity_pain_txt_day_moment"
-                    android:layout_width="match_parent"
+                <Spinner
+                    android:id="@+id/activity_pain_spn_dayTime"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/activity_pain_day_moment_morning"
-                    android:textColor="@android:color/black"
-                    android:textSize="24sp" />
+                    android:layout_marginStart="-3dp"/>
 
                 <TextView
-                    android:id="@+id/activity_pain_txt_infos"
+                    android:id="@+id/activity_pain_txt_hours"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="13h00 - 16h00"

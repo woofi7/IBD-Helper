@@ -17,9 +17,11 @@
         <item name="type2">Type 2</item>
         <item name="type3">Type 3</item>
     </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="timeOfDay_morning">Morning</string>
+    <string name="timeOfDay_midday">Midday</string>
+    <string name="timeOfDay_afternoon">Afternoon</string>
+    <string name="timeOfDay_evening">Evening</string>
+    <string name="timeOfDay_midnight">Midnight</string>
     <string name="activity_pain_intensity_tag">Intensity</string>
     <string name="activity_pain_type_tag">Type</string>
     <string name="activity_pain_location_tag">Location</string>
