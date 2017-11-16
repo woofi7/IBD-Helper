@@ -35,11 +35,13 @@ public class PainActivity extends AppCompatActivity {
             public void update(Observable o, Object arg) {
                 getSupportFragmentManager().beginTransaction()
                         .remove(fragment)
+                        .addToBackStack(null)
                         .commit();
             }
         });
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_activity_pain_card_list, fragment)
+                .addToBackStack(null)
                 .commit();
     }
 }

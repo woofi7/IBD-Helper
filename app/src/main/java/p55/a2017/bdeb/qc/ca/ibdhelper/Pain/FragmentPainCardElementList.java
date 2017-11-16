@@ -21,7 +21,7 @@ public class FragmentPainCardElementList extends Fragment {
         EDIT
     }
 
-    private EditMode editMode = EditMode.INFO;
+    private EditMode editMode;
 
     private FragmentPainCardInfo fragmentInfo;
     private FragmentPainCardEdit fragmentEdit;
@@ -89,16 +89,19 @@ public class FragmentPainCardElementList extends Fragment {
         return inflater.inflate(R.layout.fragment_activity_pain_card_element_list, container, false);
     }
 
+    //TODO: Add BackStack on edit and save
     public void changeMode(EditMode edit) {
         editMode = edit;
 
         if (edit == EditMode.EDIT) {
             getChildFragmentManager().beginTransaction()
                     .replace(R.id.fragment_pain_card_element_list, fragmentEdit)
+                    .addToBackStack(null)
                     .commit();
         } else if (edit == EditMode.INFO) {
             getChildFragmentManager().beginTransaction()
                     .replace(R.id.fragment_pain_card_element_list, fragmentInfo)
+                    .addToBackStack(null)
                     .commit();
         }
     }
