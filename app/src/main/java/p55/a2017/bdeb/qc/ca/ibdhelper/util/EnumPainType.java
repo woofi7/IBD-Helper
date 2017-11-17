@@ -1,0 +1,35 @@
+package p55.a2017.bdeb.qc.ca.ibdhelper.util;
+
+import android.content.Context;
+
+import p55.a2017.bdeb.qc.ca.ibdhelper.R;
+
+
+public enum EnumPainType {
+    STING(0, R.string.painType_sting),
+    CRAMP(1, R.string.painType_cramp),
+    BURN(2, R.string.painType_burn),
+    PINCH(3, R.string.painType_pinch),
+    TWINGE(4, R.string.painType_twinge),
+    ;
+
+    private int id;
+    private int text;
+
+    EnumPainType(int id, int text) {
+        this.id = id;
+        this.text = text;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getText(Context context) {
+        return context.getString(text);
+    }
+
+    public int getTextRessource() {
+        return text;
+    }
+}

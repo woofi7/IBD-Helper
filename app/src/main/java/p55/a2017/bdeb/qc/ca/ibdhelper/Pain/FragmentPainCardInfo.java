@@ -19,7 +19,7 @@ public class FragmentPainCardInfo extends Fragment {
     private EventEmitter onClickEdit = new EventEmitter();
     private EventEmitter onClickDelete = new EventEmitter();
 
-    public static FragmentPainCardInfo newInstance() {
+    public static FragmentPainCardInfo newInstance(Pain painData) {
         return new FragmentPainCardInfo();
     }
 

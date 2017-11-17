@@ -13,22 +13,22 @@ import p55.a2017.bdeb.qc.ca.ibdhelper.R;
 import p55.a2017.bdeb.qc.ca.ibdhelper.util.EventEmitter;
 
 public class FragmentPainCardElementList extends Fragment {
-
     private static final String ARG_EDIT_MODE = "EDIT_MODE";
 
     enum EditMode {
         INFO,
         EDIT
     }
-
     private EditMode editMode;
+
+    private Pain painData;
 
     private FragmentPainCardInfo fragmentInfo;
     private FragmentPainCardEdit fragmentEdit;
-
     private EventEmitter onDelete = new EventEmitter();
 
     public FragmentPainCardElementList() {
+        this.painData = new Pain();
     }
 
     public static FragmentPainCardElementList newInstance(EditMode edit) {
@@ -48,8 +48,8 @@ public class FragmentPainCardElementList extends Fragment {
             editMode = EditMode.valueOf(editModeStr);
         }
 
-        fragmentInfo = FragmentPainCardInfo.newInstance();
-        fragmentEdit = FragmentPainCardEdit.newInstance();
+        fragmentInfo = FragmentPainCardInfo.newInstance(painData);
+        fragmentEdit = FragmentPainCardEdit.newInstance(painData);
 
         fragmentInfo.setOnEditClickistener(new Observer() {
             @Override
@@ -63,13 +63,13 @@ public class FragmentPainCardElementList extends Fragment {
                 onDelete.next();
             }
         });
-        fragmentEdit.setOnSaveClickistener(new Observer() {
+        fragmentEdit.setOnSaveClickListener(new Observer() {
             @Override
             public void update(Observable o, Object arg) {
                 changeMode(EditMode.INFO);
             }
         });
-        fragmentEdit.setOnDeleteClickistener(new Observer() {
+        fragmentEdit.setOnDeleteClickListener(new Observer() {
             @Override
             public void update(Observable o, Object arg) {
                 onDelete.next();

@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 

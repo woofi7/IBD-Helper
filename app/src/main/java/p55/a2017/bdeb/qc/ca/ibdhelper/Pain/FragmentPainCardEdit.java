@@ -6,34 +6,31 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Observer;
 
 import p55.a2017.bdeb.qc.ca.ibdhelper.R;
-import p55.a2017.bdeb.qc.ca.ibdhelper.util.EnumDayTime;
 import p55.a2017.bdeb.qc.ca.ibdhelper.util.EventEmitter;
+import p55.a2017.bdeb.qc.ca.ibdhelper.util.FragmentTimePicker;
 
 public class FragmentPainCardEdit extends Fragment {
     private EventEmitter onClickSave = new EventEmitter();
     private EventEmitter onClickDelete = new EventEmitter();
 
-    public static FragmentPainCardEdit newInstance() {
+    public static FragmentPainCardEdit newInstance(Pain painData) {
         return new FragmentPainCardEdit();
     }
 
     public FragmentPainCardEdit() {
     }
 
-    public void setOnSaveClickistener(Observer e) {
+    public void setOnSaveClickListener(Observer e) {
         onClickSave.subscribe(e);
     }
 
-    public void setOnDeleteClickistener(Observer e) {
+    public void setOnDeleteClickListener(Observer e) {
         onClickDelete.subscribe(e);
     }
 
@@ -44,8 +41,10 @@ public class FragmentPainCardEdit extends Fragment {
 
         Button saveBtn = rootView.findViewById(R.id.activity_pain_btn_save);
         Button deleteBtn = rootView.findViewById(R.id.activity_pain_btn_delete);
-        Spinner dayTimeSpn = rootView.findViewById(R.id.activity_pain_spn_dayTime);
-        TextView hoursTxt = rootView.findViewById(R.id.activity_pain_txt_hours);
+        View timeLyt = rootView.findViewById(R.id.activity_pain_lyt_time);
+        Spinner painTypeSpr = rootView.findViewById(R.id.activity_pain_type_spr);
+        painTypeSpr.setAdapter(new PainTypeAdapter(getContext()));
+
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,28 +58,13 @@ public class FragmentPainCardEdit extends Fragment {
                 onClickDelete.next();
             }
         });
-
-        EnumDayTime[] enumDayTimeArray = EnumDayTime.values();
-        String[] timeOfDayArray = new String[enumDayTimeArray.length];
-
-        for (int i = 0; i < enumDayTimeArray.length; i++) {
-            timeOfDayArray[i] = enumDayTimeArray[i].getText(getContext());
-        }
-        //TODO: Créer des ressources a partir de l'enum
-
-
-        ArrayAdapter<CharSequence> dayTimeAdapter = ArrayAdapter.createFromResource(
-                rootView.getContext(), timeOfDayArray, R.layout.spinner_layout);
-        dayTimeSpn.setAdapter(dayTimeAdapter);
-
-        hoursTxt.setOnClickListener(new View.OnClickListener() {
+        timeLyt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFragment newFragment = new TimePickerFragment();
+                DialogFragment newFragment = new FragmentTimePicker();
                 newFragment.show(getFragmentManager(),"TimePicker");
             }
         });
-
         return rootView;
     }
 }

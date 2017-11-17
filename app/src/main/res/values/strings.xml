@@ -12,11 +12,11 @@
     <string name="activity_main_group_day_saturday">Saturday</string>
     <string name="title_activity_pain">Pain</string>
     <string name="activity_pain_icon_description">Abdominal pain icon.</string>
-    <string-array name="activity_pain_painType">
-        <item name="type1">Type 1</item>
-        <item name="type2">Type 2</item>
-        <item name="type3">Type 3</item>
-    </string-array>
+    <string name="painType_sting">Sting</string>
+    <string name="painType_cramp">Cramp</string>
+    <string name="painType_burn">Burn</string>
+    <string name="painType_pinch">Pinch</string>
+    <string name="painType_twinge">Twinge</string>
     <string name="timeOfDay_morning">Morning</string>
     <string name="timeOfDay_midday">Midday</string>
     <string name="timeOfDay_afternoon">Afternoon</string>
