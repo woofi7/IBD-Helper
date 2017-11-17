@@ -8,10 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Observer;
 
 import p55.a2017.bdeb.qc.ca.ibdhelper.R;
+import p55.a2017.bdeb.qc.ca.ibdhelper.util.EnumDayTime;
 import p55.a2017.bdeb.qc.ca.ibdhelper.util.EventEmitter;
 import p55.a2017.bdeb.qc.ca.ibdhelper.util.FragmentTimePicker;
 
@@ -45,6 +49,7 @@ public class FragmentPainCardEdit extends Fragment {
         Spinner painTypeSpr = rootView.findViewById(R.id.activity_pain_type_spr);
         painTypeSpr.setAdapter(new PainTypeAdapter(getContext()));
 
+        setTime(rootView);
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,5 +71,27 @@ public class FragmentPainCardEdit extends Fragment {
             }
         });
         return rootView;
+    }
+
+    private void setTime(View rootView) {
+        DateFormat dateFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
+        Calendar calendar = Calendar.getInstance();
+
+        TextView hoursTxt = rootView.findViewById(R.id.activity_pain_txt_hours);
+        TextView dayTimeTxt = rootView.findViewById(R.id.activity_pain_txt_dayTime);
+
+        hoursTxt.setText(dateFormat.format(calendar.getTime()));
+        for (EnumDayTime enumDayTime : EnumDayTime.values()) {
+            if (enumDayTime.getStartHour() <= calendar.get(Calendar.HOUR_OF_DAY)) {
+                dayTimeTxt.setText(enumDayTime.getText(getContext()));
+            }
+            else if (enumDayTime.getStartHour() > calendar.get(Calendar.HOUR_OF_DAY)) {
+                break;
+            }
+        }
+
+        if (calendar.get(Calendar.HOUR_OF_DAY) < 6) {
+            dayTimeTxt.setText(EnumDayTime.MIDNIGHT.getText(getContext()));
+        }
     }
 }

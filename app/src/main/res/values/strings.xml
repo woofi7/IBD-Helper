@@ -12,7 +12,7 @@
     <string name="activity_main_group_day_saturday">Saturday</string>
     <string name="title_activity_pain">Pain</string>
     <string name="activity_pain_icon_description">Abdominal pain icon.</string>
-    <string name="painType_sting">Sting</string>
+    <string name="painType_sting">Spot</string>
     <string name="painType_cramp">Cramp</string>
     <string name="painType_burn">Burn</string>
     <string name="painType_pinch">Pinch</string>
@@ -25,7 +25,6 @@
     <string name="activity_pain_intensity_tag">Intensity</string>
     <string name="activity_pain_type_tag">Type</string>
     <string name="activity_pain_location_tag">Location</string>
-    <string name="activity_pain_day_moment_morning">Morning</string>
     <string name="activity_pain_card_btn_delete_txt">Delete</string>
     <string name="activity_pain_card_btn_save_txt">Save</string>
     <string name="activity_pain_card_btn_edit_txt">Edit</string>

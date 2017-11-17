@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">IBD Helper</string>
+    <string name="activity_main_day_txt_meal">Repas</string>
+    <string name="activity_main_day_txt_toilet">Selles</string>
+    <string name="activity_main_day_txt_pain">Douleurs</string>
+    <string name="activity_main_group_day_monday">Lundi</string>
+    <string name="activity_main_group_day_tuesday">Mardi</string>
+    <string name="activity_main_group_day_wednesday">Mercredi</string>
+    <string name="activity_main_group_day_thursday">Jeudi</string>
+    <string name="activity_main_group_day_friday">Vendredi</string>
+    <string name="activity_main_group_day_sunday">Samedi</string>
+    <string name="activity_main_group_day_saturday">Dimanche</string>
+    <string name="title_activity_pain">Douleur</string>
+    <string name="activity_pain_icon_description">Icone de douleur abdominale.</string>
+    <string name="timeOfDay_morning">Matin</string>
+    <string name="timeOfDay_midday">Midi</string>
+    <string name="timeOfDay_afternoon">Après-midi</string>
+    <string name="timeOfDay_evening">Soirée</string>
+    <string name="timeOfDay_midnight">Nuit</string>
+    <string name="activity_pain_intensity_tag">Intensité</string>
+    <string name="activity_pain_type_tag">Type</string>
+    <string name="activity_pain_location_tag">Emplacement</string>
+    <string name="activity_pain_card_btn_delete_txt">Supprimer</string>
+    <string name="activity_pain_card_btn_save_txt">Sauvegarder</string>
+    <string name="activity_pain_card_btn_edit_txt">Modifier</string>
+    <string name="painType_sting">Point</string>
+    <string name="painType_cramp">Crampe</string>
+    <string name="painType_burn">Brûlure</string>
+    <string name="painType_pinch">Pincement</string>
+    <string name="painType_twinge">Élancement</string>
+</resources>
