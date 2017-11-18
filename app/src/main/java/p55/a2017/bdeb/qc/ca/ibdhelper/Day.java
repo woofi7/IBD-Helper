@@ -29,7 +29,7 @@ public class Day {
 
     private EventEmitter onSelected = new EventEmitter();
 
-    public Day(EnumDay enumDay, View group, Date date) {
+    public Day(EnumDay enumDay, View group, final Date dayDate) {
         this.enumDay = enumDay;
         this.group = group;
         this.indicator = this.group.findViewById(R.id.activity_main_group_img_indicator);
@@ -44,7 +44,7 @@ public class Day {
         TextView dateTxt = this.group.findViewById(R.id.activity_main_group_txt_date);
 
         dayTxt.setText(enumDay.getText(this.group.getContext()));
-        dateTxt.setText(SimpleDateFormat.getDateInstance().format(date));
+        dateTxt.setText(SimpleDateFormat.getDateInstance().format(dayDate));
 
         //Remove the bottom separator of the last element
         if (enumDay == EnumDay.SUNDAY) {
@@ -80,6 +80,7 @@ public class Day {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(groupInfo.getContext(), PainActivity.class);
+                intent.putExtra(PainActivity.EXTRA_DATE, dayDate);
                 groupInfo.getContext().startActivity(intent);
             }
         });

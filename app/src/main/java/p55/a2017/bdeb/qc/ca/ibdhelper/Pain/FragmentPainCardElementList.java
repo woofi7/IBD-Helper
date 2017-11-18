@@ -9,11 +9,13 @@ import android.view.ViewGroup;
 import java.util.Observable;
 import java.util.Observer;
 
+import p55.a2017.bdeb.qc.ca.ibdhelper.DbHelper.Pain;
 import p55.a2017.bdeb.qc.ca.ibdhelper.R;
 import p55.a2017.bdeb.qc.ca.ibdhelper.util.EventEmitter;
 
 public class FragmentPainCardElementList extends Fragment {
     private static final String ARG_EDIT_MODE = "EDIT_MODE";
+    private static final String ARG_PAIN_ID = "PAIN_ID";
 
     enum EditMode {
         INFO,
@@ -21,20 +23,18 @@ public class FragmentPainCardElementList extends Fragment {
     }
     private EditMode editMode;
 
-    private Pain painData;
-
     private FragmentPainCardInfo fragmentInfo;
     private FragmentPainCardEdit fragmentEdit;
     private EventEmitter onDelete = new EventEmitter();
 
     public FragmentPainCardElementList() {
-        this.painData = new Pain();
     }
 
-    public static FragmentPainCardElementList newInstance(EditMode edit) {
+    public static FragmentPainCardElementList newInstance(EditMode edit, long painId) {
         FragmentPainCardElementList fragment = new FragmentPainCardElementList();
         Bundle bundle = new Bundle();
         bundle.putString(ARG_EDIT_MODE, edit.name());
+        bundle.putLong(ARG_PAIN_ID, painId);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -42,14 +42,16 @@ public class FragmentPainCardElementList extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        long painId = -1;
 
         if (getArguments() != null) {
+            painId = getArguments().getLong(ARG_PAIN_ID);
             String editModeStr = getArguments().getString(ARG_EDIT_MODE);
             editMode = EditMode.valueOf(editModeStr);
         }
 
-        fragmentInfo = FragmentPainCardInfo.newInstance(painData);
-        fragmentEdit = FragmentPainCardEdit.newInstance(painData);
+        fragmentInfo = FragmentPainCardInfo.newInstance(painId);
+        fragmentEdit = FragmentPainCardEdit.newInstance(painId);
 
         fragmentInfo.setOnEditClickistener(new Observer() {
             @Override
@@ -66,6 +68,7 @@ public class FragmentPainCardElementList extends Fragment {
         fragmentEdit.setOnSaveClickListener(new Observer() {
             @Override
             public void update(Observable o, Object arg) {
+                fragmentInfo.setPainId((Long) arg);
                 changeMode(EditMode.INFO);
             }
         });
@@ -89,19 +92,16 @@ public class FragmentPainCardElementList extends Fragment {
         return inflater.inflate(R.layout.fragment_activity_pain_card_element_list, container, false);
     }
 
-    //TODO: Add BackStack on edit and save
     public void changeMode(EditMode edit) {
         editMode = edit;
 
         if (edit == EditMode.EDIT) {
             getChildFragmentManager().beginTransaction()
                     .replace(R.id.fragment_pain_card_element_list, fragmentEdit)
-                    .addToBackStack(null)
                     .commit();
         } else if (edit == EditMode.INFO) {
             getChildFragmentManager().beginTransaction()
                     .replace(R.id.fragment_pain_card_element_list, fragmentInfo)
-                    .addToBackStack(null)
                     .commit();
         }
     }

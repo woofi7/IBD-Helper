@@ -25,6 +25,15 @@ public enum EnumPainType {
         return id;
     }
 
+    public static EnumPainType fromId(int id) {
+        for (EnumPainType enumPainType : EnumPainType.values()) {
+            if (enumPainType.getId() == id) {
+                return enumPainType;
+            }
+        }
+        throw new IllegalArgumentException("Invalid id : " + id);
+    }
+
     public String getText(Context context) {
         return context.getString(text);
     }

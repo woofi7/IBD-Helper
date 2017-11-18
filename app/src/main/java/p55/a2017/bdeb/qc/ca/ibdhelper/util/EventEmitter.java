@@ -9,6 +9,11 @@ public class EventEmitter extends Observable {
         this.notifyObservers();
     }
 
+    public void next(Object arg) {
+        this.setChanged();
+        this.notifyObservers(arg);
+    }
+
     public void subscribe(Observer observer) {
         this.addObserver(observer);
     }
