@@ -2,6 +2,8 @@ package p55.a2017.bdeb.qc.ca.ibdhelper.Pain;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -12,7 +14,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import p55.a2017.bdeb.qc.ca.ibdhelper.DbHelper.DbHelper;
-import p55.a2017.bdeb.qc.ca.ibdhelper.DbHelper.Pain;
 import p55.a2017.bdeb.qc.ca.ibdhelper.R;
 
 public class PainActivity extends AppCompatActivity {
@@ -37,8 +38,13 @@ public class PainActivity extends AppCompatActivity {
             }
         });
 
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            getSupportFragmentManager().beginTransaction()
+                    .remove(fragment)
+                    .commit();
+        }
 
-        List<Long> painIds =  DbHelper.getInstance(this).loadPainDataId(dayDate);
+        List<Long> painIds = DbHelper.getInstance(this).loadPainDataId(dayDate);
 
         for (Long painId : painIds) {
             addCard(painId);
@@ -54,10 +60,21 @@ public class PainActivity extends AppCompatActivity {
         final FragmentPainCardElementList fragment = FragmentPainCardElementList.newInstance(editMode, painId);
         fragment.setOnDeleteListener(new Observer() {
             @Override
-            public void update(Observable o, Object arg) {
+            public void update(Observable o, final Object arg) {
+                DbHelper.getInstance(PainActivity.this).deletePain((Long) arg);
                 getSupportFragmentManager().beginTransaction()
                         .remove(fragment)
                         .commit();
+                Snackbar snackbar = Snackbar.make(PainActivity.this.findViewById(R.id.activity_pain_main), R.string.activity_pain_delete_confirm, Snackbar.LENGTH_LONG);
+                snackbar.setAction(R.string.activity_pain_delete_undo, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DbHelper.getInstance(PainActivity.this).undeletePain((Long) arg);
+                        addCard((Long) arg);
+                    }
+                });
+                snackbar.show();
+
             }
         });
         getSupportFragmentManager().beginTransaction()

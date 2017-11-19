@@ -29,18 +29,61 @@
                 android:paddingTop="8dp">
 
                 <TextView
-                    android:id="@+id/activity_pain_txt_day_moment"
+                    android:id="@+id/activity_pain_info_txt_dayTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="Midday"
                     android:textColor="@android:color/black"
                     android:textSize="24sp" />
 
                 <TextView
-                    android:id="@+id/activity_pain_txt_infos"
+                    android:id="@+id/activity_pain_info_txt_hours"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="13h00 - 16h00"
+                    android:layout_height="wrap_content"
+                    android:text="12h00"
                     android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/activity_pain_intensity_tag"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/activity_pain_info_txt_intensity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingStart="16dp"
+                        android:text="10" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/activity_pain_type_tag"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/activity_pain_info_txt_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingStart="16dp"
+                        android:text="Cramp" />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -75,7 +118,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/activity_pain_btn_delete"
+                    android:id="@+id/activity_pain_info_btn_delete"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -90,7 +133,7 @@
                     android:src="@color/backgroundColor" />
 
                 <Button
-                    android:id="@+id/activity_pain_btn_edit"
+                    android:id="@+id/activity_pain_info_btn_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

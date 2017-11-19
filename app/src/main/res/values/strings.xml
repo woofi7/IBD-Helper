@@ -28,4 +28,6 @@
     <string name="activity_pain_card_btn_delete_txt">Delete</string>
     <string name="activity_pain_card_btn_save_txt">Save</string>
     <string name="activity_pain_card_btn_edit_txt">Edit</string>
+    <string name="activity_pain_delete_confirm">Deleted</string>
+    <string name="activity_pain_delete_undo">UNDO</string>
 </resources>

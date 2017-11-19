@@ -21,11 +21,9 @@ public class FragmentPainCardElementList extends Fragment {
         INFO,
         EDIT
     }
-    private EditMode editMode;
 
-    private FragmentPainCardInfo fragmentInfo;
-    private FragmentPainCardEdit fragmentEdit;
     private EventEmitter onDelete = new EventEmitter();
+    private long painId = -1;
 
     public FragmentPainCardElementList() {
     }
@@ -42,42 +40,14 @@ public class FragmentPainCardElementList extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        long painId = -1;
 
+        EditMode editMode = EditMode.INFO;
         if (getArguments() != null) {
             painId = getArguments().getLong(ARG_PAIN_ID);
             String editModeStr = getArguments().getString(ARG_EDIT_MODE);
             editMode = EditMode.valueOf(editModeStr);
         }
 
-        fragmentInfo = FragmentPainCardInfo.newInstance(painId);
-        fragmentEdit = FragmentPainCardEdit.newInstance(painId);
-
-        fragmentInfo.setOnEditClickistener(new Observer() {
-            @Override
-            public void update(Observable o, Object arg) {
-                changeMode(EditMode.EDIT);
-            }
-        });
-        fragmentInfo.setOnDeleteClickistener(new Observer() {
-            @Override
-            public void update(Observable o, Object arg) {
-                onDelete.next();
-            }
-        });
-        fragmentEdit.setOnSaveClickListener(new Observer() {
-            @Override
-            public void update(Observable o, Object arg) {
-                fragmentInfo.setPainId((Long) arg);
-                changeMode(EditMode.INFO);
-            }
-        });
-        fragmentEdit.setOnDeleteClickListener(new Observer() {
-            @Override
-            public void update(Observable o, Object arg) {
-                onDelete.next();
-            }
-        });
 
         changeMode(editMode);
     }
@@ -93,13 +63,42 @@ public class FragmentPainCardElementList extends Fragment {
     }
 
     public void changeMode(EditMode edit) {
-        editMode = edit;
+        getArguments().putString(ARG_EDIT_MODE, edit.name());
 
         if (edit == EditMode.EDIT) {
+            FragmentPainCardEdit fragmentEdit = FragmentPainCardEdit.newInstance(painId);
+            fragmentEdit.setOnSaveClickListener(new Observer() {
+                @Override
+                public void update(Observable o, Object arg) {
+                    painId = (Long) arg;
+                    getArguments().putLong(ARG_PAIN_ID, painId);
+                    changeMode(EditMode.INFO);
+                }
+            });
+            fragmentEdit.setOnDeleteClickListener(new Observer() {
+                @Override
+                public void update(Observable o, Object arg) {
+                    onDelete.next(painId);
+                }
+            });
             getChildFragmentManager().beginTransaction()
                     .replace(R.id.fragment_pain_card_element_list, fragmentEdit)
                     .commit();
         } else if (edit == EditMode.INFO) {
+            FragmentPainCardInfo fragmentInfo = FragmentPainCardInfo.newInstance(painId);
+
+            fragmentInfo.setOnEditClickistener(new Observer() {
+                @Override
+                public void update(Observable o, Object arg) {
+                    changeMode(EditMode.EDIT);
+                }
+            });
+            fragmentInfo.setOnDeleteClickistener(new Observer() {
+                @Override
+                public void update(Observable o, Object arg) {
+                    onDelete.next(painId);
+                }
+            });
             getChildFragmentManager().beginTransaction()
                     .replace(R.id.fragment_pain_card_element_list, fragmentInfo)
                     .commit();

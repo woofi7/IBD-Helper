@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -135,15 +136,21 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void deletePain(Pain painData) {
+    public void deletePain(long painId) {
+        activePain(painId, false);
+    }
+    public void undeletePain(long painId) {
+        activePain(painId, true);
+    }
+    public void activePain(long painId, boolean active) {
         SQLiteDatabase db = null;
 
         try {
             db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(PAIN_ACTIVE, false);
+            values.put(PAIN_ACTIVE, active);
 
-            db.update(PAIN_TABLE, values, PAIN_ID + " = ?", new String[]{String.valueOf(painData.getId())});
+            db.update(PAIN_TABLE, values, PAIN_ID + " = ?", new String[]{String.valueOf(painId)});
         } finally {
             if (db != null)
                 db.close();
@@ -190,7 +197,7 @@ public class DbHelper extends SQLiteOpenHelper {
         long dayId = getDayId(dayDate);
         try {
             db = this.getReadableDatabase();
-            cursor = db.rawQuery("select * from " + PAIN_TABLE + " where " + PAIN_DAY_ID + " = " + dayId, null);
+            cursor = db.rawQuery("select * from " + PAIN_TABLE + " where " + PAIN_DAY_ID + " = " + dayId + " and " + PAIN_ACTIVE + " = 1", null);
             ArrayList<Long> painIds = new ArrayList<>();
             if (cursor.moveToFirst()) {
                 while (!cursor.isAfterLast()) {
@@ -209,6 +216,7 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
+    @Nullable
     public Pain loadPain(long painId) {
         SQLiteDatabase db = null;
         Cursor cursor = null;
