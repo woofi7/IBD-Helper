@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.Date;
 import java.util.List;
@@ -75,6 +76,19 @@ public class PainActivity extends AppCompatActivity {
                 });
                 snackbar.show();
 
+            }
+        });
+        fragment.setOnDrawListener(new Observer() {
+            @Override
+            public void update(Observable observable, Object o) {
+                CustomScrollView scrollView = findViewById(R.id.activity_pain_main);
+
+                if (o == null) {
+                    scrollView.disableScrolling();
+                }
+                else {
+                    scrollView.enableScrolling();
+                }
             }
         });
         getSupportFragmentManager().beginTransaction()

@@ -157,11 +157,12 @@
                             android:layout_height="match_parent"
                             android:src="@drawable/abdomen" />
 
-                        <ImageView
+                        <LinearLayout
                             android:id="@+id/activity_pain_location_img_board"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/border" />
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:orientation="horizontal">
+                        </LinearLayout>
                     </RelativeLayout>
 
                 </LinearLayout>

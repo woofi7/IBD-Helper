@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import java.util.Observable;
 import java.util.Observer;
 
-import p55.a2017.bdeb.qc.ca.ibdhelper.DbHelper.Pain;
 import p55.a2017.bdeb.qc.ca.ibdhelper.R;
 import p55.a2017.bdeb.qc.ca.ibdhelper.util.EventEmitter;
 
@@ -23,6 +22,7 @@ public class FragmentPainCardElementList extends Fragment {
     }
 
     private EventEmitter onDelete = new EventEmitter();
+    private EventEmitter onDraw = new EventEmitter();
     private long painId = -1;
 
     public FragmentPainCardElementList() {
@@ -48,12 +48,15 @@ public class FragmentPainCardElementList extends Fragment {
             editMode = EditMode.valueOf(editModeStr);
         }
 
-
         changeMode(editMode);
     }
 
     public void setOnDeleteListener (Observer e) {
         onDelete.subscribe(e);
+    }
+
+    public void setOnDrawListener (Observer e) {
+        onDraw.subscribe(e);
     }
 
     @Override
@@ -79,6 +82,12 @@ public class FragmentPainCardElementList extends Fragment {
                 @Override
                 public void update(Observable o, Object arg) {
                     onDelete.next(painId);
+                }
+            });
+            fragmentEdit.setOnDrawListener(new Observer() {
+                @Override
+                public void update(Observable observable, Object o) {
+                    onDraw.next(o);
                 }
             });
             getChildFragmentManager().beginTransaction()

@@ -20,7 +20,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <p55.a2017.bdeb.qc.ca.ibdhelper.Pain.CustomScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/activity_pain_main"
@@ -78,7 +78,7 @@
 
             </LinearLayout>
         </android.support.constraint.ConstraintLayout>
-    </ScrollView>
+    </p55.a2017.bdeb.qc.ca.ibdhelper.Pain.CustomScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/activity_pain_fab_newCard"

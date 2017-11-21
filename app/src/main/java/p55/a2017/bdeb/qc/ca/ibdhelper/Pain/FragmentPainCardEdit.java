@@ -1,17 +1,26 @@
 package p55.a2017.bdeb.qc.ca.ibdhelper.Pain;
 
+import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Observable;
@@ -21,7 +30,6 @@ import p55.a2017.bdeb.qc.ca.ibdhelper.DbHelper.DbHelper;
 import p55.a2017.bdeb.qc.ca.ibdhelper.DbHelper.Pain;
 import p55.a2017.bdeb.qc.ca.ibdhelper.R;
 import p55.a2017.bdeb.qc.ca.ibdhelper.util.DateHelper;
-import p55.a2017.bdeb.qc.ca.ibdhelper.util.EnumDayTime;
 import p55.a2017.bdeb.qc.ca.ibdhelper.util.EnumPainType;
 import p55.a2017.bdeb.qc.ca.ibdhelper.util.EventEmitter;
 import p55.a2017.bdeb.qc.ca.ibdhelper.util.FragmentTimePicker;
@@ -31,6 +39,7 @@ public class FragmentPainCardEdit extends Fragment {
 
     private EventEmitter onClickSave = new EventEmitter();
     private EventEmitter onClickDelete = new EventEmitter();
+    private EventEmitter onDraw = new EventEmitter();
 
     private Date hoursMinutes;
 
@@ -53,6 +62,11 @@ public class FragmentPainCardEdit extends Fragment {
         onClickDelete.subscribe(e);
     }
 
+    public void setOnDrawListener(Observer e) {
+        onDraw.subscribe(e);
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,18 +75,15 @@ public class FragmentPainCardEdit extends Fragment {
             painId = getArguments().getLong(ARG_PAIN_ID);
         }
 
-        final Pain painData = DbHelper.getInstance(getContext()).loadPain(painId);
-
         final View rootView = inflater.inflate(R.layout.fragment_activity_pain_card_edit, container, false);
 
-        Button saveBtn = rootView.findViewById(R.id.activity_pain_btn_save);
-        Button deleteBtn = rootView.findViewById(R.id.activity_pain_btn_delete);
-        View timeLyt = rootView.findViewById(R.id.activity_pain_lyt_time);
-        final Spinner painTypeSpr = rootView.findViewById(R.id.activity_pain_type_spr);
-        final SeekBar intensitySkb = rootView.findViewById(R.id.activity_pain_intensity_skb);
+        setLocationComponent(rootView);
 
+        final SeekBar intensitySkb = rootView.findViewById(R.id.activity_pain_intensity_skb);
+        final Spinner painTypeSpr = rootView.findViewById(R.id.activity_pain_type_spr);
         painTypeSpr.setAdapter(new PainTypeAdapter(getContext()));
 
+        final Pain painData = DbHelper.getInstance(getContext()).loadPain(painId);
         if (painData == null) {
             setTime(rootView);
         }
@@ -85,6 +96,7 @@ public class FragmentPainCardEdit extends Fragment {
         }
 
 
+        Button saveBtn = rootView.findViewById(R.id.activity_pain_btn_save);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,12 +112,16 @@ public class FragmentPainCardEdit extends Fragment {
                 onClickSave.next(pain.getId());
             }
         });
+
+        Button deleteBtn = rootView.findViewById(R.id.activity_pain_btn_delete);
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onClickDelete.next();
             }
         });
+
+        View timeLyt = rootView.findViewById(R.id.activity_pain_lyt_time);
         timeLyt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,7 +136,38 @@ public class FragmentPainCardEdit extends Fragment {
                 newFragment.show(getFragmentManager(),"TimePicker");
             }
         });
+
         return rootView;
+    }
+
+    private void setLocationComponent(View rootView) {
+        LinearLayout board = rootView.findViewById(R.id.activity_pain_location_img_board);
+        final ImageButton brushButton = rootView.findViewById(R.id.activity_pain_location_ibtn_edit);
+        ImageButton eraseButton = rootView.findViewById(R.id.activity_pain_location_ibtn_erase);
+        ImageButton deleteButton = rootView.findViewById(R.id.activity_pain_location_ibtn_delete);
+
+        final DrawingView mDrawingView = new DrawingView(getContext());
+        mDrawingView.setOnDrawListener(new Observer() {
+            @Override
+            public void update(Observable observable, Object o) {
+                onDraw.next(o);
+            }
+        });
+
+        board.addView(mDrawingView);
+
+        brushButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mDrawingView.getDrawSate()) {
+                }
+                else {
+
+                }
+
+                mDrawingView.changeDrawState();
+            }
+        });
     }
 
     private void setTime(View rootView) {
