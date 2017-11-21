@@ -6,8 +6,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.Observer;
 
@@ -16,26 +20,36 @@ import p55.a2017.bdeb.qc.ca.ibdhelper.util.EventEmitter;
 public class DrawingView extends View {
     private EventEmitter onDraw = new EventEmitter();
 
+    private boolean[][] position = new boolean[64][64];
+
     private float mX;
     private float mY;
     private static final float TOUCH_TOLERANCE = 4;
-    private Paint mPaint;
+    private Paint mPaintAdd;
+    private Paint mPaintErase;
     private Bitmap mBitmap;
     private Canvas mCanvas;
     private Path mPath;
     private Paint mBitmapPaint;
 
-    private boolean drawState = true;
-    private boolean drawSate;
+    private boolean drawState = false;
+    private boolean eraseState = false;
 
     public DrawingView(Context context) {
         super(context);
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-        mPaint.setColor(0xFFFF0000);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setStrokeWidth(50);
+        mPaintAdd = new Paint();
+        mPaintAdd.setAntiAlias(true);
+        mPaintAdd.setColor(0xFFFF0000);
+        mPaintAdd.setStyle(Paint.Style.STROKE);
+        mPaintAdd.setStrokeCap(Paint.Cap.ROUND);
+        mPaintAdd.setStrokeWidth(50);
+
+        mPaintErase = new Paint();
+        mPaintErase.setAntiAlias(true);
+        mPaintErase.setStyle(Paint.Style.STROKE);
+        mPaintErase.setStrokeCap(Paint.Cap.ROUND);
+        mPaintErase.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        mPaintErase.setStrokeWidth(100);
 
         mPath = new Path();
         mBitmapPaint = new Paint();
@@ -51,21 +65,57 @@ public class DrawingView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(mBitmap);
+
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
         canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
-        canvas.drawPath(mPath, mPaint);
+        if (getDrawState()) {
+            canvas.drawPath(mPath, mPaintAdd);
+        }
+        else {
+            canvas.drawPath(mPath, mPaintErase);
+        }
     }
 
     private void touch_start(float x, float y) {
-        onDraw.next();
         mPath.moveTo(x, y);
         mX = x;
         mY = y;
+
+        updatePosArray((int) x,(int) y);
     }
+
+    private void updatePosArray(int x, int y) {
+        int tabX = x * position.length / mCanvas.getWidth();
+        int tabY = y * position.length / mCanvas.getHeight();
+
+        if (tabX >= position.length) {
+            tabX = position.length - 1;
+        }
+        if (tabX < 0) {
+            tabX = 0;
+        }
+        if (tabY >= position.length) {
+            tabY = position.length - 1;
+        }
+        if (tabY < 0) {
+            tabY = 0;
+        }
+
+        if (getDrawState()) {
+            position[tabX][tabY] = true;
+        }
+        if (getEraseState()){
+            position[tabX][tabY] = false;
+        }
+
+        Pair<String, String> posXY = new Pair<>(String.valueOf(tabX), String.valueOf(tabY));
+        onDraw.next(posXY);
+    }
+
     private void touch_move(float x, float y) {
         float dx = Math.abs(x - mX);
         float dy = Math.abs(y - mY);
@@ -74,17 +124,25 @@ public class DrawingView extends View {
             mX = x;
             mY = y;
         }
+
+        updatePosArray((int) x,(int) y);
     }
     private void touch_up() {
         mPath.lineTo(mX, mY);
-        mCanvas.drawPath(mPath, mPaint);
+        if (getDrawState()) {
+            mCanvas.drawPath(mPath, mPaintAdd);
+        }
+        else {
+            mCanvas.drawPath(mPath, mPaintErase);
+        }
         mPath.reset();
-        onDraw.next(mCanvas);
+
+        onDraw.next();
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (drawState) {
+        if (!drawState && !eraseState) {
             return false;
         }
 
@@ -112,7 +170,22 @@ public class DrawingView extends View {
         drawState = !drawState;
     }
 
-    public boolean getDrawSate() {
-        return drawSate;
+    public void changeEraseState() {
+        eraseState = !eraseState;
+    }
+
+    public boolean getDrawState() {
+        return drawState;
+    }
+
+    public boolean getEraseState() {
+        return eraseState;
+    }
+
+    public void clearCanvas() {
+        Toast.makeText(getContext(), "Clear", Toast.LENGTH_SHORT).show();
+        mCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        invalidate();
+        position = new boolean[position.length][position.length];
     }
 }

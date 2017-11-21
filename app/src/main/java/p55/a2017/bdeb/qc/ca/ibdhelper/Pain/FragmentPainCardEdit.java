@@ -1,25 +1,19 @@
 package p55.a2017.bdeb.qc.ca.ibdhelper.Pain;
 
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Pair;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -143,13 +137,21 @@ public class FragmentPainCardEdit extends Fragment {
     private void setLocationComponent(View rootView) {
         LinearLayout board = rootView.findViewById(R.id.activity_pain_location_img_board);
         final ImageButton brushButton = rootView.findViewById(R.id.activity_pain_location_ibtn_edit);
-        ImageButton eraseButton = rootView.findViewById(R.id.activity_pain_location_ibtn_erase);
+        final ImageButton eraseButton = rootView.findViewById(R.id.activity_pain_location_ibtn_erase);
         ImageButton deleteButton = rootView.findViewById(R.id.activity_pain_location_ibtn_delete);
+        final TextView posX = rootView.findViewById(R.id.posX);
+        final TextView posY = rootView.findViewById(R.id.posY);
 
         final DrawingView mDrawingView = new DrawingView(getContext());
         mDrawingView.setOnDrawListener(new Observer() {
             @Override
             public void update(Observable observable, Object o) {
+                if (o != null) {
+                    Pair<String, String> posXY = (Pair<String, String>) o;
+                    posX.setText(posXY.first);
+                    posY.setText(posXY.second);
+                }
+
                 onDraw.next(o);
             }
         });
@@ -159,13 +161,41 @@ public class FragmentPainCardEdit extends Fragment {
         brushButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mDrawingView.getDrawSate()) {
+                if (mDrawingView.getDrawState()) {
+                    brushButton.setActivated(false);
                 }
                 else {
-
+                    if (mDrawingView.getEraseState()) {
+                        mDrawingView.changeEraseState();
+                        eraseButton.setActivated(false);
+                    }
+                    brushButton.setActivated(true);
                 }
 
                 mDrawingView.changeDrawState();
+            }
+        });
+        eraseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mDrawingView.getEraseState()) {
+                    eraseButton.setActivated(false);
+                }
+                else {
+                    if (mDrawingView.getDrawState()) {
+                        mDrawingView.changeDrawState();
+                        brushButton.setActivated(false);
+                    }
+                    eraseButton.setActivated(true);
+                }
+
+                mDrawingView.changeEraseState();
+            }
+        });
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDrawingView.clearCanvas();
             }
         });
     }

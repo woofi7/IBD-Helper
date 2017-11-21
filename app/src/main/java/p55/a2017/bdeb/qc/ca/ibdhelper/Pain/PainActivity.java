@@ -84,10 +84,10 @@ public class PainActivity extends AppCompatActivity {
                 CustomScrollView scrollView = findViewById(R.id.activity_pain_main);
 
                 if (o == null) {
-                    scrollView.disableScrolling();
+                    scrollView.enableScrolling();
                 }
                 else {
-                    scrollView.enableScrolling();
+                    scrollView.disableScrolling();
                 }
             }
         });
