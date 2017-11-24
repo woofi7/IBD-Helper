@@ -139,19 +139,11 @@ public class FragmentPainCardEdit extends Fragment {
         final ImageButton brushButton = rootView.findViewById(R.id.activity_pain_location_ibtn_edit);
         final ImageButton eraseButton = rootView.findViewById(R.id.activity_pain_location_ibtn_erase);
         ImageButton deleteButton = rootView.findViewById(R.id.activity_pain_location_ibtn_delete);
-        final TextView posX = rootView.findViewById(R.id.posX);
-        final TextView posY = rootView.findViewById(R.id.posY);
 
         final DrawingView mDrawingView = new DrawingView(getContext());
         mDrawingView.setOnDrawListener(new Observer() {
             @Override
             public void update(Observable observable, Object o) {
-                if (o != null) {
-                    Pair<String, String> posXY = (Pair<String, String>) o;
-                    posX.setText(posXY.first);
-                    posY.setText(posXY.second);
-                }
-
                 onDraw.next(o);
             }
         });

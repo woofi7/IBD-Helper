@@ -83,7 +83,7 @@ public class PainActivity extends AppCompatActivity {
             public void update(Observable observable, Object o) {
                 CustomScrollView scrollView = findViewById(R.id.activity_pain_main);
 
-                if (o == null) {
+                if ((Boolean) o) {
                     scrollView.enableScrolling();
                 }
                 else {

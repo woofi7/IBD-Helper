@@ -93,6 +93,59 @@ public class DrawingView extends View {
         updatePosArray((int) x,(int) y);
     }
 
+    private void touch_move(float x, float y) {
+        float dx = Math.abs(x - mX);
+        float dy = Math.abs(y - mY);
+        if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
+            mPath.quadTo(mX, mY, (x + mX)/2, (y + mY)/2);
+            mX = x;
+            mY = y;
+        }
+
+        updatePosArray((int) x,(int) y);
+    }
+    private void touch_up() {
+        mPath.lineTo(mX, mY);
+        if (getDrawState()) {
+            mCanvas.drawPath(mPath, mPaintAdd);
+        }
+        else {
+            mCanvas.drawPath(mPath, mPaintErase);
+        }
+        mPath.reset();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (!drawState && !eraseState) {
+            return false;
+        }
+
+        float x = event.getX();
+        float y = event.getY();
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                touch_start(x, y);
+                invalidate();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                touch_move(x, y);
+                onDraw.next(false);
+                invalidate();
+                break;
+            case MotionEvent.ACTION_UP:
+                touch_up();
+                onDraw.next(true);
+                invalidate();
+                break;
+        }
+
+        //debugArray();
+
+        return true;
+    }
+
     private void updatePosArray(int x, int y) {
         boolean insertValue;
         int diameter;
@@ -129,59 +182,6 @@ public class DrawingView extends View {
 
             position[tabX][tabY] = insertValue;
         }
-    }
-
-    private void touch_move(float x, float y) {
-        float dx = Math.abs(x - mX);
-        float dy = Math.abs(y - mY);
-        if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
-            mPath.quadTo(mX, mY, (x + mX)/2, (y + mY)/2);
-            mX = x;
-            mY = y;
-        }
-
-        updatePosArray((int) x,(int) y);
-    }
-    private void touch_up() {
-        mPath.lineTo(mX, mY);
-        if (getDrawState()) {
-            mCanvas.drawPath(mPath, mPaintAdd);
-        }
-        else {
-            mCanvas.drawPath(mPath, mPaintErase);
-        }
-        mPath.reset();
-
-        onDraw.next();
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (!drawState && !eraseState) {
-            return false;
-        }
-
-        float x = event.getX();
-        float y = event.getY();
-
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                touch_start(x, y);
-                invalidate();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                touch_move(x, y);
-                invalidate();
-                break;
-            case MotionEvent.ACTION_UP:
-                touch_up();
-                invalidate();
-                break;
-        }
-
-        //debugArray();
-
-        return true;
     }
 
     private void debugArray() {
