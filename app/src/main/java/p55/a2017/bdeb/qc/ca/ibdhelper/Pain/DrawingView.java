@@ -8,6 +8,8 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.os.Debug;
+import android.util.Log;
 import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,9 +20,12 @@ import java.util.Observer;
 import p55.a2017.bdeb.qc.ca.ibdhelper.util.EventEmitter;
 
 public class DrawingView extends View {
+    public static final int ARRAY_SIZE = 10;
+    private static final int STROKE_WIDTH_PEN = 50;
+    private static final int STROKE_WIDTH_ERASER = 100;
     private EventEmitter onDraw = new EventEmitter();
 
-    private boolean[][] position = new boolean[64][64];
+    private boolean[][] position = new boolean[ARRAY_SIZE][ARRAY_SIZE];
 
     private float mX;
     private float mY;
@@ -42,14 +47,14 @@ public class DrawingView extends View {
         mPaintAdd.setColor(0xFFFF0000);
         mPaintAdd.setStyle(Paint.Style.STROKE);
         mPaintAdd.setStrokeCap(Paint.Cap.ROUND);
-        mPaintAdd.setStrokeWidth(50);
+        mPaintAdd.setStrokeWidth(STROKE_WIDTH_PEN);
 
         mPaintErase = new Paint();
         mPaintErase.setAntiAlias(true);
         mPaintErase.setStyle(Paint.Style.STROKE);
         mPaintErase.setStrokeCap(Paint.Cap.ROUND);
         mPaintErase.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-        mPaintErase.setStrokeWidth(100);
+        mPaintErase.setStrokeWidth(STROKE_WIDTH_ERASER);
 
         mPath = new Path();
         mBitmapPaint = new Paint();
@@ -89,31 +94,41 @@ public class DrawingView extends View {
     }
 
     private void updatePosArray(int x, int y) {
-        int tabX = x * position.length / mCanvas.getWidth();
-        int tabY = y * position.length / mCanvas.getHeight();
-
-        if (tabX >= position.length) {
-            tabX = position.length - 1;
-        }
-        if (tabX < 0) {
-            tabX = 0;
-        }
-        if (tabY >= position.length) {
-            tabY = position.length - 1;
-        }
-        if (tabY < 0) {
-            tabY = 0;
-        }
-
+        boolean insertValue;
+        int diameter;
         if (getDrawState()) {
-            position[tabX][tabY] = true;
+            insertValue = true;
+            diameter = STROKE_WIDTH_PEN;
         }
-        if (getEraseState()){
-            position[tabX][tabY] = false;
+        else if (getEraseState()){
+            insertValue = false;
+            diameter = STROKE_WIDTH_ERASER;
+        }
+        else {
+            return;
         }
 
-        Pair<String, String> posXY = new Pair<>(String.valueOf(tabX), String.valueOf(tabY));
-        onDraw.next(posXY);
+        int tabX, tabY;
+        int radius = diameter / 2;
+        for (int i = 0; i < radius; i++) {
+            tabX = (x + i) * position.length / mCanvas.getWidth();
+            tabY = (y + i) * position.length / mCanvas.getHeight();
+
+            if (tabX >= position.length) {
+                tabX = position.length - 1;
+            }
+            if (tabX < 0) {
+                tabX = 0;
+            }
+            if (tabY >= position.length) {
+                tabY = position.length - 1;
+            }
+            if (tabY < 0) {
+                tabY = 0;
+            }
+
+            position[tabX][tabY] = insertValue;
+        }
     }
 
     private void touch_move(float x, float y) {
@@ -163,7 +178,36 @@ public class DrawingView extends View {
                 invalidate();
                 break;
         }
+
+        //debugArray();
+
         return true;
+    }
+
+    private void debugArray() {
+        StringBuilder array = new StringBuilder();
+
+        array.append("  ");
+        for (int i = 0; i < position.length; i++) {
+            array.append(i).append(" ");
+        }
+        array.append("\n");
+
+        for (int i = 0; i < position.length; i++) {
+            array.append(i).append(" ");
+            for (int j = 0; j < position[i].length; j++) {
+                if (position[j][i]) {
+                    array.append("X ");
+                }
+                else {
+                    array.append("0 ");
+                }
+
+            }
+            array.append("\n");
+        }
+
+        Log.d("Array", array.toString());
     }
 
     public void changeDrawState() {
