@@ -2,11 +2,6 @@ package p55.a2017.bdeb.qc.ca.ibdhelper;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-
-import java.util.Calendar;
-import java.util.Observable;
-import java.util.Observer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,40 +29,21 @@ public class MainActivity extends AppCompatActivity {
      * Initialiser l'ensemble des journées en leur assignant leurs éléments d'interface.
      */
     private void initialiseWeek() {
-        week = new Day[EnumDay.values().length];
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.activity_main_group_weeklayout, FragmentMainElementDay.newInstance())
+                .add(R.id.activity_main_group_weeklayout, FragmentMainElementDay.newInstance())
+                .add(R.id.activity_main_group_weeklayout, FragmentMainElementDay.newInstance())
+                .commit();
+
+        /*week = new Day[EnumDay.values().length];
 
         Calendar calendar = Calendar.getInstance();
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         EnumDay currentDay = EnumDay.fromDayOfWeek(dayOfWeek);
 
         for (final EnumDay enumDay : EnumDay.values()) {
-            View group;
-            switch (enumDay) {
-                case MONDAY:
-                    group = findViewById(R.id.activity_main_group_monday);
-                    break;
-                case TUESDAY:
-                    group = findViewById(R.id.activity_main_group_tuesday);
-                    break;
-                case WEDNESDAY:
-                    group = findViewById(R.id.activity_main_group_wednesday);
-                    break;
-                case THURSDAY:
-                    group = findViewById(R.id.activity_main_group_thursday);
-                    break;
-                case FRIDAY:
-                    group = findViewById(R.id.activity_main_group_friday);
-                    break;
-                case SATURDAY:
-                    group = findViewById(R.id.activity_main_group_saturday);
-                    break;
-                case SUNDAY:
-                    group = findViewById(R.id.activity_main_group_sunday);
 
-                    break;
-                default:
-                    return;
-            }
+
 
             int difference = enumDay.getId() - currentDay.getId();
             calendar = Calendar.getInstance();
@@ -82,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             week[enumDay.getId()] = day;
-        }
-        week[currentDay.getId()].expand();
+        }*/
+        //week[currentDay.getId()].expand();
     }
 }
