@@ -12,7 +12,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initialiseWeek();
+        if (savedInstanceState == null) {
+            initialiseWeek();
+        }
     }
 
     private void setDay(EnumDay day) {

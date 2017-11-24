@@ -11,8 +11,7 @@
     <LinearLayout
         android:id="@+id/activity_main_group_weeklayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="fill_horizontal"
+        android:layout_height="match_parent"
         android:orientation="vertical"/>
 
 </android.support.constraint.ConstraintLayout>
