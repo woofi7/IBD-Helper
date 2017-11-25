@@ -20,7 +20,7 @@ import java.util.Observer;
 import p55.a2017.bdeb.qc.ca.ibdhelper.util.EventEmitter;
 
 public class DrawingView extends View {
-    public static final int ARRAY_SIZE = 10;
+    public static final int ARRAY_SIZE = 64;
     private static final int STROKE_WIDTH_PEN = 50;
     private static final int STROKE_WIDTH_ERASER = 100;
     private EventEmitter onDraw = new EventEmitter();
@@ -70,7 +70,6 @@ public class DrawingView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(mBitmap);
-
     }
 
     @Override
@@ -78,7 +77,16 @@ public class DrawingView extends View {
         super.draw(canvas);
         canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
         if (getDrawState()) {
-            canvas.drawPath(mPath, mPaintAdd);
+
+            int cellHeigh = mCanvas.getHeight() / ARRAY_SIZE;
+            int cellWidth = mCanvas.getWidth() / ARRAY_SIZE;
+            for (int i = 0; i < position.length; i++) {
+                for (int j = 0; j < position[i].length; j++) {
+                    if (position[i][j]) {
+                        canvas.drawCircle(i * cellWidth, j * cellHeigh, 10, mPaintAdd );
+                    }
+                }
+            }
         }
         else {
             canvas.drawPath(mPath, mPaintErase);
@@ -87,22 +95,23 @@ public class DrawingView extends View {
 
     private void touch_start(float x, float y) {
         mPath.moveTo(x, y);
-        mX = x;
-        mY = y;
 
-        updatePosArray((int) x,(int) y);
+        Pair<Integer, Integer> centeredPos = updatePosArray((int) x, (int) y);
+        mX = centeredPos.first;
+        mY = centeredPos.second;
     }
 
     private void touch_move(float x, float y) {
         float dx = Math.abs(x - mX);
         float dy = Math.abs(y - mY);
         if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
-            mPath.quadTo(mX, mY, (x + mX)/2, (y + mY)/2);
-            mX = x;
-            mY = y;
+            
+            Pair<Integer, Integer> centeredPos = updatePosArray((int) x, (int) y);
+            mPath.quadTo(mX, mY, centeredPos.first, centeredPos.second);
+            mX = centeredPos.first;
+            mY = centeredPos.second;
         }
 
-        updatePosArray((int) x,(int) y);
     }
     private void touch_up() {
         mPath.lineTo(mX, mY);
@@ -141,12 +150,12 @@ public class DrawingView extends View {
                 break;
         }
 
-        //debugArray();
+        debugArray();
 
         return true;
     }
 
-    private void updatePosArray(int x, int y) {
+    private Pair<Integer, Integer> updatePosArray(int x, int y) {
         boolean insertValue;
         int diameter;
         if (getDrawState()) {
@@ -158,30 +167,30 @@ public class DrawingView extends View {
             diameter = STROKE_WIDTH_ERASER;
         }
         else {
-            return;
+            return null;
         }
 
         int tabX, tabY;
-        int radius = diameter / 2;
-        for (int i = 0; i < radius; i++) {
-            tabX = (x + i) * position.length / mCanvas.getWidth();
-            tabY = (y + i) * position.length / mCanvas.getHeight();
+        int cellHeigh = mCanvas.getHeight() / ARRAY_SIZE;
+        int cellWidth = mCanvas.getWidth() / ARRAY_SIZE;
+        tabX = x / cellWidth;
+        tabY = y / cellHeigh;
 
-            if (tabX >= position.length) {
-                tabX = position.length - 1;
-            }
-            if (tabX < 0) {
-                tabX = 0;
-            }
-            if (tabY >= position.length) {
-                tabY = position.length - 1;
-            }
-            if (tabY < 0) {
-                tabY = 0;
-            }
-
-            position[tabX][tabY] = insertValue;
+        if (tabX >= position.length) {
+            tabX = position.length - 1;
         }
+        if (tabX < 0) {
+            tabX = 0;
+        }
+        if (tabY >= position.length) {
+            tabY = position.length - 1;
+        }
+        if (tabY < 0) {
+            tabY = 0;
+        }
+
+        position[tabX][tabY] = insertValue;
+        return new Pair<>(tabX * cellWidth - cellWidth / 2, tabY * cellHeigh - cellHeigh / 2);
     }
 
     private void debugArray() {
