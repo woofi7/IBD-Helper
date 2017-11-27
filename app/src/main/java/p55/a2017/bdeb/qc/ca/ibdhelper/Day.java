@@ -24,7 +24,6 @@ public class Day {
     private View groupDay;
     private View groupInfo;
 
-    private Date date;
     private boolean enabled;
 
     private EventEmitter onSelected = new EventEmitter();
