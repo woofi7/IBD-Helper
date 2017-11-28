@@ -15,20 +15,20 @@ import java.util.Observer;
 import p55.a2017.bdeb.qc.ca.ibdhelper.util.EventEmitter;
 
 public class DrawingView extends View {
-    public static final int ARRAY_SIZE = 8;
-
     private EventEmitter onDraw = new EventEmitter();
 
-    private boolean[][] position = new boolean[ARRAY_SIZE][ARRAY_SIZE];
+    private LocationArray locationArray;
 
     private Paint mPaint;
     private Canvas mCanvas;
 
     private boolean drawState = false;
     private boolean eraseState = false;
+    private boolean update;
 
-    public DrawingView(Context context) {
+    public DrawingView(Context context, LocationArray locationArray) {
         super(context);
+        this.locationArray = locationArray;
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setColor(0xFFFF0000);
@@ -50,20 +50,27 @@ public class DrawingView extends View {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        if (getDrawState() || getEraseState()) {
-            int cellHeigh = mCanvas.getHeight() / ARRAY_SIZE;
-            int cellWidth = mCanvas.getWidth() / ARRAY_SIZE;
-            for (int i = 0; i < position.length; i++) {
-                for (int j = 0; j < position[i].length; j++) {
-                    if (position[i][j]) {
-                        Rect rect = new Rect(i* cellWidth,
-                                j * cellHeigh + cellHeigh,
-                                i* cellWidth + cellWidth,
-                                j * cellHeigh);
-                        canvas.drawRect(rect, mPaint);
-                    }
+        if (getDrawState() || getEraseState() || update) {
+            drawArray(canvas);
+        }
+    }
+
+    private void drawArray(Canvas canvas) {
+        int cellHeigh = mCanvas.getHeight() / locationArray.size();
+        int cellWidth = mCanvas.getWidth() / locationArray.size();
+        for (int i = 0; i < locationArray.getPosition().length; i++) {
+            for (int j = 0; j < locationArray.getPosition()[i].length; j++) {
+                if (locationArray.getPosition()[i][j]) {
+                    Rect rect = new Rect(i* cellWidth,
+                            j * cellHeigh + cellHeigh,
+                            i* cellWidth + cellWidth,
+                            j * cellHeigh);
+                    canvas.drawRect(rect, mPaint);
                 }
             }
+        }
+        if (update) {
+            update = false;
         }
     }
 
@@ -110,11 +117,12 @@ public class DrawingView extends View {
         }
 
         int tabX, tabY;
-        int cellHeigh = mCanvas.getHeight() / ARRAY_SIZE;
-        int cellWidth = mCanvas.getWidth() / ARRAY_SIZE;
+        int cellHeigh = mCanvas.getHeight() / locationArray.size();
+        int cellWidth = mCanvas.getWidth() / locationArray.size();
         tabX = x / cellWidth;
         tabY = y / cellHeigh;
 
+        boolean[][] position = locationArray.getPosition();
         if (tabX >= position.length) {
             tabX = position.length - 1;
         }
@@ -135,6 +143,7 @@ public class DrawingView extends View {
         StringBuilder array = new StringBuilder();
 
         array.append("  ");
+        boolean[][] position = locationArray.getPosition();
         for (int i = 0; i < position.length; i++) {
             array.append(i).append(" ");
         }
@@ -176,6 +185,11 @@ public class DrawingView extends View {
     public void clearCanvas() {
         Toast.makeText(getContext(), "Clear", Toast.LENGTH_SHORT).show();
         invalidate();
-        position = new boolean[position.length][position.length];
+        locationArray.reset();
+    }
+
+    public void update() {
+        this.update = true;
+        invalidate();
     }
 }

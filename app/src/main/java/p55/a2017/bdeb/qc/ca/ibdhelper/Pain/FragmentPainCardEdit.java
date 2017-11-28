@@ -15,6 +15,8 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Observable;
@@ -71,15 +73,16 @@ public class FragmentPainCardEdit extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.fragment_activity_pain_card_edit, container, false);
 
-        setLocationComponent(rootView);
 
         final SeekBar intensitySkb = rootView.findViewById(R.id.activity_pain_intensity_skb);
         final Spinner painTypeSpr = rootView.findViewById(R.id.activity_pain_type_spr);
         painTypeSpr.setAdapter(new PainTypeAdapter(getContext()));
 
+        final LocationArray locationArray;
         final Pain painData = DbHelper.getInstance(getContext()).loadPain(painId);
         if (painData == null) {
             setTime(rootView);
+            locationArray = new LocationArray();
         }
         else {
             Calendar calendar = Calendar.getInstance();
@@ -87,8 +90,15 @@ public class FragmentPainCardEdit extends Fragment {
             setTime(rootView, calendar.getTime());
             intensitySkb.setProgress(painData.getIntensity());
             painTypeSpr.setSelection(painData.getPainType().ordinal());
+            Gson gson = new Gson();
+            if (painData.getLocation().equals("")) {
+                locationArray = new LocationArray();
+            }
+            else {
+                locationArray = gson.fromJson(painData.getLocation(), LocationArray.class);
+            }
         }
-
+        setLocationComponent(rootView, locationArray);
 
         Button saveBtn = rootView.findViewById(R.id.activity_pain_btn_save);
         saveBtn.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +110,9 @@ public class FragmentPainCardEdit extends Fragment {
                 pain.setMinutes(hoursMinutes.getMinutes());
                 pain.setIntensity(intensitySkb.getProgress());
                 pain.setPainType((EnumPainType) painTypeSpr.getSelectedItem());
-                pain.setLocation("");
+                Gson gson = new Gson();
+                String json = gson.toJson(locationArray);
+                pain.setLocation(json);
 
                 DbHelper.getInstance(getContext()).savePain(pain, Calendar.getInstance().getTime());
                 onClickSave.next(pain.getId());
@@ -134,13 +146,13 @@ public class FragmentPainCardEdit extends Fragment {
         return rootView;
     }
 
-    private void setLocationComponent(View rootView) {
+    private void setLocationComponent(View rootView, LocationArray locationArray) {
         LinearLayout board = rootView.findViewById(R.id.activity_pain_location_img_board);
         final ImageButton brushButton = rootView.findViewById(R.id.activity_pain_location_ibtn_edit);
         final ImageButton eraseButton = rootView.findViewById(R.id.activity_pain_location_ibtn_erase);
         ImageButton deleteButton = rootView.findViewById(R.id.activity_pain_location_ibtn_delete);
 
-        final DrawingView mDrawingView = new DrawingView(getContext());
+        final DrawingView mDrawingView = new DrawingView(getContext(), locationArray);
         mDrawingView.setOnDrawListener(new Observer() {
             @Override
             public void update(Observable observable, Object o) {
@@ -149,6 +161,7 @@ public class FragmentPainCardEdit extends Fragment {
         });
 
         board.addView(mDrawingView);
+        mDrawingView.update();
 
         brushButton.setOnClickListener(new View.OnClickListener() {
             @Override

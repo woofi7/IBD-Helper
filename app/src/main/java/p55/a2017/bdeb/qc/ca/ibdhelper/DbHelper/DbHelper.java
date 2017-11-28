@@ -109,7 +109,7 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(PAIN_TIME_MINUTE, painData.getMinutes());
         values.put(PAIN_INTENSITY, painData.getIntensity());
         values.put(PAIN_TYPE, painData.getPainType().getId());
-        values.put(PAIN_LOCATION, "");
+        values.put(PAIN_LOCATION, painData.getLocation());
         values.put(PAIN_ACTIVE, true);
         return values;
     }
