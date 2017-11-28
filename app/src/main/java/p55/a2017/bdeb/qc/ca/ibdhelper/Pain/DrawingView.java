@@ -26,14 +26,18 @@ public class DrawingView extends View {
     private boolean eraseState = false;
     private boolean update;
 
-    public DrawingView(Context context, LocationArray locationArray) {
+    private DrawingView(Context context) {
         super(context);
-        this.locationArray = locationArray;
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setColor(0xFFFF0000);
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
+    }
+
+    public DrawingView(Context context, LocationArray locationArray) {
+        this(context);
+        this.locationArray = locationArray;
     }
 
     public void setOnDrawListener(Observer e) {
@@ -50,12 +54,6 @@ public class DrawingView extends View {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        if (getDrawState() || getEraseState() || update) {
-            drawArray(canvas);
-        }
-    }
-
-    private void drawArray(Canvas canvas) {
         int cellHeigh = mCanvas.getHeight() / locationArray.size();
         int cellWidth = mCanvas.getWidth() / locationArray.size();
         for (int i = 0; i < locationArray.getPosition().length; i++) {
@@ -184,12 +182,7 @@ public class DrawingView extends View {
 
     public void clearCanvas() {
         Toast.makeText(getContext(), "Clear", Toast.LENGTH_SHORT).show();
-        invalidate();
         locationArray.reset();
-    }
-
-    public void update() {
-        this.update = true;
         invalidate();
     }
 }

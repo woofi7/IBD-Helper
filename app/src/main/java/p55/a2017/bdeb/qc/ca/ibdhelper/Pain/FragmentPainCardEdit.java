@@ -161,7 +161,6 @@ public class FragmentPainCardEdit extends Fragment {
         });
 
         board.addView(mDrawingView);
-        mDrawingView.update();
 
         brushButton.setOnClickListener(new View.OnClickListener() {
             @Override

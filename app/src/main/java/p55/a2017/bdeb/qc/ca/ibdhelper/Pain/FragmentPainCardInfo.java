@@ -8,9 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.Calendar;
+import java.util.Observable;
 import java.util.Observer;
 
 import p55.a2017.bdeb.qc.ca.ibdhelper.DbHelper.DbHelper;
@@ -67,6 +72,16 @@ public class FragmentPainCardInfo extends Fragment {
         TextView dayTimeTxt = rootView.findViewById(R.id.activity_pain_info_txt_dayTime);
         TextView intensityTxt = rootView.findViewById(R.id.activity_pain_info_txt_intensity);
         TextView typeTxt = rootView.findViewById(R.id.activity_pain_info_txt_type);
+
+        LocationArray locationArray = new LocationArray();
+        Gson gson = new Gson();
+        if (!painData.getLocation().equals("")) {
+            locationArray = gson.fromJson(painData.getLocation(), LocationArray.class);
+        }
+
+        DrawingView mDrawingView = new DrawingView(getContext(), locationArray);
+        LinearLayout board = rootView.findViewById(R.id.activity_pain_location_board_info);
+        board.addView(mDrawingView);
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(0, 0, 0, painData.getHours(), painData.getMinutes(), 0);
