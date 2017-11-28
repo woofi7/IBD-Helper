@@ -1,10 +1,7 @@
 package p55.a2017.bdeb.qc.ca.ibdhelper;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.AttributeSet;
-import android.view.View;
 
 import java.util.Calendar;
 import java.util.Observable;
@@ -47,14 +44,9 @@ public class MainActivity extends AppCompatActivity {
             int difference = enumDay.getId() - currentDay.getId();
             calendar = Calendar.getInstance();
             calendar.add(Calendar.DATE, difference);
+            long time = calendar.getTime().getTime();
 
-            FragmentMainElementDay fragment = FragmentMainElementDay.newInstance(enumDay, calendar.getTime().getTime());
-
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.activity_main_group_weeklayout, fragment)
-                    .commit();
-
-            //fragment.setEnable(difference <= 0);
+            FragmentMainElementDay fragment = FragmentMainElementDay.newInstance(enumDay, time, difference <= 0, currentDay == enumDay);
             fragment.setOnSelectListener(new Observer() {
                 @Override
                 public void update(Observable o, Object arg) {
@@ -62,8 +54,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.activity_main_group_weeklayout, fragment)
+                    .commit();
             week[enumDay.getId()] = fragment;
         }
-        //week[currentDay.getId()].expand();
     }
 }

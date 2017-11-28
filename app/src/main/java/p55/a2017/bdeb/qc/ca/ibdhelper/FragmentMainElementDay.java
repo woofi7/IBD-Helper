@@ -25,6 +25,8 @@ import p55.a2017.bdeb.qc.ca.ibdhelper.util.EventEmitter;
 public class FragmentMainElementDay extends Fragment {
     private static final String ARG_ENUM_DAY = "ENUM_DAY";
     private static final String ARG_DAY_DATE = "DAY_DATE";
+    private static final String ARG_ENABLED = "ENABLED";
+    private static final String ARG_EXPANDED = "EXPANDED";
 
     private ImageView indicator;
     private View group;
@@ -42,11 +44,13 @@ public class FragmentMainElementDay extends Fragment {
         onSelected.addObserver(e);
     }
 
-    public static FragmentMainElementDay newInstance(EnumDay enumDay, long dayDate) {
+    public static FragmentMainElementDay newInstance(EnumDay enumDay, long dayDate, boolean enabled, boolean expanded) {
         FragmentMainElementDay fragment = new FragmentMainElementDay();
         Bundle bundle = new Bundle();
         bundle.putLong(ARG_DAY_DATE, dayDate);
         bundle.putInt(ARG_ENUM_DAY, enumDay.ordinal());
+        bundle.putBoolean(ARG_ENABLED, enabled);
+        bundle.putBoolean(ARG_EXPANDED, expanded);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -61,14 +65,17 @@ public class FragmentMainElementDay extends Fragment {
                              Bundle savedInstanceState) {
         Date dayDate = null;
         EnumDay enumDay = null;
+        boolean expanded = false;
         if (getArguments() != null) {
             dayDate = new Date(getArguments().getLong(ARG_DAY_DATE));
             enumDay = EnumDay.values()[getArguments().getInt(ARG_ENUM_DAY)];
+            expanded = getArguments().getBoolean(ARG_EXPANDED);
+            this.enabled = getArguments().getBoolean(ARG_ENABLED);
         }
 
         final View rootView = inflater.inflate(R.layout.fragment_main_element_day, container, false);
 
-        this.group = rootView;
+        this.group = rootView.findViewById(R.id.activity_main_group);
         this.indicator = rootView.findViewById(R.id.activity_main_group_img_indicator);
         this.groupDay = rootView.findViewById(R.id.activity_main_day_group);
         this.groupInfo = rootView.findViewById(R.id.activity_main_group_info);
@@ -83,12 +90,11 @@ public class FragmentMainElementDay extends Fragment {
         dayTxt.setText(enumDay.getText(this.group.getContext()));
         dateTxt.setText(SimpleDateFormat.getDateInstance().format(dayDate));
 
-        //Remove the bottom separator of the last element
-        if (enumDay == EnumDay.SUNDAY) {
-            this.group.findViewById(R.id.activity_main_group_border_bottom).setVisibility(View.GONE);
+        if (expanded) {
+            expand();
         }
-
-        groupInfo.setOnClickListener(new View.OnClickListener() {
+        setEnable(this.enabled);
+        group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (enabled) {
@@ -122,7 +128,6 @@ public class FragmentMainElementDay extends Fragment {
                 groupInfo.getContext().startActivity(intent);
             }
         });
-
         return rootView;
     }
 
@@ -133,7 +138,6 @@ public class FragmentMainElementDay extends Fragment {
     public void expand() {
         this.indicator.setBackgroundResource(R.drawable.ic_expand_less_black_24dp);
         this.groupDay.setVisibility(View.VISIBLE);
-        //this.group.setBackground(null);
     }
 
     /**
@@ -142,11 +146,6 @@ public class FragmentMainElementDay extends Fragment {
     public void collapse() {
         this.indicator.setBackgroundResource(R.drawable.ic_expand_more_black_24dp);
         this.groupDay.setVisibility(View.GONE);
-        //int[] attrs = new int[] { android.R.attr.selectableItemBackground};
-        //TypedArray ta = this.group.getContext().obtainStyledAttributes(attrs);
-        //Drawable drawableFromTheme = ta.getDrawable(0);
-        //ta.recycle();
-        //this.group.setBackground(drawableFromTheme);
     }
 
     public void setEnable(boolean enabled) {

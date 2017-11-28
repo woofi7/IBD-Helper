@@ -12,6 +12,8 @@
         android:id="@+id/activity_main_group_weeklayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:showDividers="middle"
+        android:divider="?android:dividerHorizontal"
         android:orientation="vertical"/>
 
 </android.support.constraint.ConstraintLayout>
