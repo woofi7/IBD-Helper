@@ -29,4 +29,7 @@
     <string name="painType_burn">Brûlure</string>
     <string name="painType_pinch">Pincement</string>
     <string name="painType_twinge">Élancement</string>
+    <string name="activity_main_mnu_about">À propos</string>
+    <string name="activity_pain_delete_undo">Annuler</string>
+    <string name="activity_pain_delete_confirm">Supprimé</string>
 </resources>

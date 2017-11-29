@@ -2,6 +2,8 @@ package p55.a2017.bdeb.qc.ca.ibdhelper;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.Calendar;
 import java.util.Observable;
@@ -18,6 +20,17 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             initialiseWeek();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return true;
     }
 
     private void setDay(EnumDay day) {

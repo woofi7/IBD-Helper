@@ -21,6 +21,11 @@ public class PainActivity extends AppCompatActivity {
     public static final String EXTRA_DATE = "DATE";
     private Date dayDate;
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,10 @@ public class PainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pain);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         FloatingActionButton newCardButton = findViewById(R.id.activity_pain_fab_newCard);
         newCardButton.setOnClickListener(new View.OnClickListener() {
