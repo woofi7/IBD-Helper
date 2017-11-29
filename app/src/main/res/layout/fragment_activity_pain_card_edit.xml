@@ -67,7 +67,6 @@
 
                     <SeekBar
                         android:id="@+id/activity_pain_intensity_skb"
-                        style="@style/Widget.AppCompat.SeekBar.Discrete"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"

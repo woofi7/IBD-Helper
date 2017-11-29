@@ -2,6 +2,9 @@ package p55.a2017.bdeb.qc.ca.ibdhelper.Pain;
 
 import android.annotation.SuppressLint;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Pair;
@@ -75,6 +78,8 @@ public class FragmentPainCardEdit extends Fragment {
 
 
         final SeekBar intensitySkb = rootView.findViewById(R.id.activity_pain_intensity_skb);
+        customizeSeekBar(intensitySkb);
+
         final Spinner painTypeSpr = rootView.findViewById(R.id.activity_pain_type_spr);
         painTypeSpr.setAdapter(new PainTypeAdapter(getContext()));
 
@@ -144,6 +149,34 @@ public class FragmentPainCardEdit extends Fragment {
         });
 
         return rootView;
+    }
+
+    private void customizeSeekBar(SeekBar intensitySkb) {
+        ShapeDrawable thumb = new ShapeDrawable(new OvalShape());
+
+        thumb.setIntrinsicHeight(80);
+        thumb.setIntrinsicWidth(30);
+        intensitySkb.setThumb(thumb);
+        intensitySkb.setBackgroundColor(Color.BLUE);
+        intensitySkb.setBackground(R.drawable.seekbar_background);
+
+        intensitySkb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            public void onStopTrackingTouch(SeekBar arg0) {
+                // TODO Auto-generated method stub
+                System.out.println(".....111.......");
+
+            }
+
+            public void onStartTrackingTouch(SeekBar arg0) {
+                // TODO Auto-generated method stub
+                System.out.println(".....222.......");
+            }
+
+            public void onProgressChanged(SeekBar arg0, int arg1, boolean arg2) {
+                // TODO Auto-generated method stub
+                System.out.println(".....333......."+arg1);
+            }
+        });
     }
 
     private void setLocationComponent(View rootView, LocationArray locationArray) {
