@@ -46,7 +46,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="5dp"
                 android:layout_weight="0"
                 android:orientation="vertical"
                 android:visibility="visible">
@@ -65,15 +65,45 @@
                         android:text="@string/activity_pain_intensity_tag"
                         android:textSize="14sp" />
 
-                    <SeekBar
-                        android:id="@+id/activity_pain_intensity_skb"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
-                        android:max="10"
-                        android:progress="5"
-                        tools:layout_editor_absoluteX="16dp"
-                        tools:layout_editor_absoluteY="0dp" />
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingStart="12dp"
+                                android:text="0" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingEnd="8dp"
+                                android:text="10" />
+                        </LinearLayout>
+
+                        <SeekBar
+                            android:id="@+id/activity_pain_intensity_skb"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:max="10"
+                            android:progress="5"
+                            android:progressDrawable="@drawable/seekbar_progress"
+                            android:splitTrack="false"
+                            android:thumb="@drawable/seekbar_thumb"
+                            tools:layout_editor_absoluteX="16dp"
+                            tools:layout_editor_absoluteY="0dp" />
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -164,8 +194,7 @@
                             android:id="@+id/activity_pain_location_img_board"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal">
-                        </LinearLayout>
+                            android:orientation="horizontal"></LinearLayout>
                     </RelativeLayout>
 
                 </LinearLayout>
