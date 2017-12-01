@@ -6,7 +6,9 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Layout;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -36,12 +38,18 @@ public class FragmentMainElementDay extends Fragment {
     private boolean enabled = true;
 
     private EventEmitter onSelected = new EventEmitter();
+    private EventEmitter onSwipe = new EventEmitter();
+    private float startSwipe;
+    private float endSwipe;
 
     public FragmentMainElementDay() {
     }
 
     public void setOnSelectListener(Observer e) {
         onSelected.addObserver(e);
+    }
+    public void setOnSwipeListener(Observer e) {
+        onSwipe.addObserver(e);
     }
 
     public static FragmentMainElementDay newInstance(EnumDay enumDay, long dayDate, boolean enabled, boolean expanded) {
@@ -116,6 +124,33 @@ public class FragmentMainElementDay extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "Open bowel motion activity", Toast.LENGTH_SHORT).show();
                 //TODO: Make the bowel motion module
+            }
+        });
+
+        group.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        startSwipe = motionEvent.getX();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        endSwipe = motionEvent.getX();
+
+                        float delta = startSwipe - endSwipe;
+                        int swipeWidth = view.getWidth() / 2;
+
+                        if (delta > swipeWidth) {
+                            onSwipe.next(true);
+                        }
+                        else if (delta < -swipeWidth) {
+                            onSwipe.next(false);
+                        }
+                        else {
+                            view.performClick();
+                        }
+                }
+                return false;
             }
         });
 
