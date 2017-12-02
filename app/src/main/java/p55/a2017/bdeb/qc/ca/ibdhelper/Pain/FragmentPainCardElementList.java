@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -15,6 +16,7 @@ import p55.a2017.bdeb.qc.ca.ibdhelper.util.EventEmitter;
 public class FragmentPainCardElementList extends Fragment {
     private static final String ARG_EDIT_MODE = "EDIT_MODE";
     private static final String ARG_PAIN_ID = "PAIN_ID";
+    private static final String ARG_DAY_TIME = "DAY_TIME";
 
     enum EditMode {
         INFO,
@@ -28,13 +30,15 @@ public class FragmentPainCardElementList extends Fragment {
     public FragmentPainCardElementList() {
     }
 
-    public static FragmentPainCardElementList newInstance(EditMode edit, long painId) {
+    public static FragmentPainCardElementList newInstance(EditMode editMode, long painId, Date dayTime) {
         FragmentPainCardElementList fragment = new FragmentPainCardElementList();
         Bundle bundle = new Bundle();
-        bundle.putString(ARG_EDIT_MODE, edit.name());
+        bundle.putString(ARG_EDIT_MODE, editMode.name());
         bundle.putLong(ARG_PAIN_ID, painId);
+        bundle.putLong(ARG_DAY_TIME, dayTime.getTime());
         fragment.setArguments(bundle);
         return fragment;
+
     }
 
     @Override
@@ -69,7 +73,8 @@ public class FragmentPainCardElementList extends Fragment {
         getArguments().putString(ARG_EDIT_MODE, edit.name());
 
         if (edit == EditMode.EDIT) {
-            FragmentPainCardEdit fragmentEdit = FragmentPainCardEdit.newInstance(painId);
+
+            FragmentPainCardEdit fragmentEdit = FragmentPainCardEdit.newInstance(painId, new Date(getArguments().getLong(ARG_DAY_TIME)));
             fragmentEdit.setOnSaveClickListener(new Observer() {
                 @Override
                 public void update(Observable o, Object arg) {

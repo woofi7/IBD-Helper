@@ -7,8 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Observable;
@@ -30,7 +30,9 @@ public class PainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         dayDate = (Date) getIntent().getSerializableExtra(EXTRA_DATE);
+        this.setTitle(this.getTitle() + " (" + SimpleDateFormat.getDateInstance().format(dayDate) + ")");
 
         setContentView(R.layout.activity_pain);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -67,7 +69,7 @@ public class PainActivity extends AppCompatActivity {
             editMode = FragmentPainCardElementList.EditMode.INFO;
         }
 
-        final FragmentPainCardElementList fragment = FragmentPainCardElementList.newInstance(editMode, painId);
+        final FragmentPainCardElementList fragment = FragmentPainCardElementList.newInstance(editMode, painId, dayDate);
         fragment.setOnDeleteListener(new Observer() {
             @Override
             public void update(Observable o, final Object arg) {

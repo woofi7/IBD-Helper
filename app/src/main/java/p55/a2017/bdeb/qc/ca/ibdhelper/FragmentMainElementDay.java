@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Observable;
 import java.util.Observer;
 
 import p55.a2017.bdeb.qc.ca.ibdhelper.Pain.PainActivity;
@@ -127,6 +125,16 @@ public class FragmentMainElementDay extends Fragment {
             }
         });
 
+        final Date finalDayDate = dayDate;
+        painBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(groupInfo.getContext(), PainActivity.class);
+                intent.putExtra(PainActivity.EXTRA_DATE, finalDayDate);
+                groupInfo.getContext().startActivity(intent);
+            }
+        });
+
         group.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -138,7 +146,7 @@ public class FragmentMainElementDay extends Fragment {
                         endSwipe = motionEvent.getX();
 
                         float delta = startSwipe - endSwipe;
-                        int swipeWidth = view.getWidth() / 2;
+                        int swipeWidth = view.getWidth() / 3;
 
                         if (delta > swipeWidth) {
                             onSwipe.next(true);
@@ -154,15 +162,6 @@ public class FragmentMainElementDay extends Fragment {
             }
         });
 
-        final Date finalDayDate = dayDate;
-        painBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(groupInfo.getContext(), PainActivity.class);
-                intent.putExtra(PainActivity.EXTRA_DATE, finalDayDate);
-                groupInfo.getContext().startActivity(intent);
-            }
-        });
         return rootView;
     }
 

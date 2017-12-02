@@ -1,12 +1,10 @@
 package p55.a2017.bdeb.qc.ca.ibdhelper;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -52,25 +50,29 @@ public class MainActivity extends AppCompatActivity {
      * Initialiser l'ensemble des journées en leur assignant leurs éléments d'interface.
      */
     private void initialiseWeek() {
+        initialiseWeek(false);
+    }
+
+    private void initialiseWeek (boolean pastWeek) {
         if (weekDate == null) {
             weekDate = Calendar.getInstance().getTime();
         }
 
         week = new FragmentMainElementDay[EnumDay.values().length];
 
-        final Calendar[] calendar = {Calendar.getInstance()};
-        calendar[0].setTime(weekDate);
-        int dayOfWeek = calendar[0].get(Calendar.DAY_OF_WEEK);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(weekDate);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         EnumDay currentDay = EnumDay.fromDayOfWeek(dayOfWeek);
 
         for (final EnumDay enumDay : EnumDay.values()) {
             int difference = enumDay.getId() - currentDay.getId();
-            calendar[0] = Calendar.getInstance();
-            calendar[0].setTime(weekDate);
-            calendar[0].add(Calendar.DATE, difference);
-            long time = calendar[0].getTime().getTime();
+            calendar = Calendar.getInstance();
+            calendar.setTime(weekDate);
+            calendar.add(Calendar.DATE, difference);
+            long time = calendar.getTime().getTime();
 
-            FragmentMainElementDay fragment = FragmentMainElementDay.newInstance(enumDay, time, difference <= 0, currentDay == enumDay);
+            FragmentMainElementDay fragment = FragmentMainElementDay.newInstance(enumDay, time, pastWeek || difference <= 0, currentDay == enumDay);
             fragment.setOnSelectListener(new Observer() {
                 @Override
                 public void update(Observable o, Object arg) {
@@ -93,26 +95,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void swipeWeek(boolean side) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(weekDate);
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+
+        if (side) {
+            calendar.add(Calendar.DATE, 7);
+        }
+        else {
+            calendar.add(Calendar.DATE, -7);
+        }
+        int daysToMonday = calendar.get(Calendar.DAY_OF_WEEK) - calendar.getFirstDayOfWeek();
+        calendar.add(Calendar.DATE, -daysToMonday);
+
+        Calendar currentTime = Calendar.getInstance();
+        currentTime.setFirstDayOfWeek(Calendar.MONDAY);
+        if (calendar.getTime().after(currentTime.getTime())) {
+            return;
+        }
+
+        boolean pastWeek = true;
+        if (calendar.get(Calendar.WEEK_OF_YEAR) == currentTime.get(Calendar.WEEK_OF_YEAR) &&
+                calendar.get(Calendar.YEAR) == currentTime.get(Calendar.YEAR)) {
+            calendar.setTime(currentTime.getTime());
+            pastWeek = false;
+        }
+
+        //TODO: Gérer la semaine du mois de décembre/janvier qui n'est pas sur la même année.
+
+        weekDate = calendar.getTime();
+        clearFragments();
+        initialiseWeek(pastWeek);
+    }
+
+    private void clearFragments() {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         for (FragmentMainElementDay fragment : week) {
             fragmentTransaction.remove(fragment);
         }
         fragmentTransaction.commit();
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(weekDate);
-        calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        int daysToMonday = calendar.get(Calendar.DAY_OF_WEEK) - calendar.getFirstDayOfWeek() - 1;
-
-        if (side) {
-            calendar.add(Calendar.DATE, daysToMonday + 7);
-        }
-        else {
-            calendar.add(Calendar.DATE, daysToMonday - 7);
-        }
-        weekDate = calendar.getTime();
-
-        Toast.makeText(this, calendar.getTime().toString(), Toast.LENGTH_SHORT).show();
-        initialiseWeek();
     }
 }

@@ -1,10 +1,6 @@
 package p55.a2017.bdeb.qc.ca.ibdhelper.Pain;
 
 import android.annotation.SuppressLint;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Pair;
@@ -35,6 +31,7 @@ import p55.a2017.bdeb.qc.ca.ibdhelper.util.FragmentTimePicker;
 
 public class FragmentPainCardEdit extends Fragment {
     private static final String ARG_PAIN_ID = "PAIN_ID";
+    private static final String ARG_DAY_TIME = "DAY_TIME";
 
     private EventEmitter onClickSave = new EventEmitter();
     private EventEmitter onClickDelete = new EventEmitter();
@@ -42,10 +39,11 @@ public class FragmentPainCardEdit extends Fragment {
 
     private Date hoursMinutes;
 
-    public static FragmentPainCardEdit newInstance(long painId) {
+    public static FragmentPainCardEdit newInstance(long painId, Date dayTime) {
         FragmentPainCardEdit fragment = new FragmentPainCardEdit();
         Bundle bundle = new Bundle();
         bundle.putLong(ARG_PAIN_ID, painId);
+        bundle.putLong(ARG_DAY_TIME, dayTime.getTime());
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -70,8 +68,10 @@ public class FragmentPainCardEdit extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         long painId = -1;
+        Date dayTime = Calendar.getInstance().getTime();
         if (getArguments() != null) {
             painId = getArguments().getLong(ARG_PAIN_ID);
+            dayTime = new Date(getArguments().getLong(ARG_DAY_TIME));
         }
 
         final View rootView = inflater.inflate(R.layout.fragment_activity_pain_card_edit, container, false);
@@ -103,6 +103,7 @@ public class FragmentPainCardEdit extends Fragment {
         setLocationComponent(rootView, locationArray);
 
         Button saveBtn = rootView.findViewById(R.id.activity_pain_btn_save);
+        final Date finalDayTime = dayTime;
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,7 +117,7 @@ public class FragmentPainCardEdit extends Fragment {
                 String json = gson.toJson(locationArray);
                 pain.setLocation(json);
 
-                DbHelper.getInstance(getContext()).savePain(pain, Calendar.getInstance().getTime());
+                DbHelper.getInstance(getContext()).savePain(pain, finalDayTime);
                 onClickSave.next(pain.getId());
             }
         });
