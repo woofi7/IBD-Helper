@@ -167,8 +167,7 @@
                             android:layout_height="64dp"
                             android:layout_weight="0"
                             android:background="@drawable/custom_button"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/ic_eraser" />
+                            android:src="@drawable/ic_eraser_variant_black_24dp" />
 
                         <ImageButton
                             android:id="@+id/activity_pain_location_ibtn_delete"

@@ -37,14 +37,14 @@
 
             <ImageView
                 android:id="@+id/activity_pain_img_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:contentDescription="@string/activity_pain_icon_description"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/stomach_ache_black" />
+                app:srcCompat="@drawable/pain_black" />
 
             <TextView
                 android:id="@+id/activity_pain_txt_title"
