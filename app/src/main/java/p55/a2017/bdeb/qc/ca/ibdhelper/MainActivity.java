@@ -55,7 +55,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void initialiseWeek (boolean pastWeek) {
         if (weekDate == null) {
-            weekDate = Calendar.getInstance().getTime();
+            Calendar currentTime = Calendar.getInstance();
+            currentTime.set(Calendar.HOUR, 0);
+            currentTime.set(Calendar.MINUTE, 0);
+            currentTime.set(Calendar.SECOND, 0);
+            weekDate = currentTime.getTime();
         }
 
         week = new FragmentMainElementDay[EnumDay.values().length];
@@ -94,36 +98,43 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void swipeWeek(boolean side) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(weekDate);
-        calendar.setFirstDayOfWeek(Calendar.MONDAY);
-
-        if (side) {
-            calendar.add(Calendar.DATE, 7);
+    private void swipeWeek(boolean right) {
+        Calendar currentDate = Calendar.getInstance();
+        currentDate.setTime(weekDate);
+        if (right) {
+            currentDate.add(Calendar.DATE, 7);
         }
         else {
-            calendar.add(Calendar.DATE, -7);
+            currentDate.add(Calendar.DATE, -7);
         }
-        int daysToMonday = calendar.get(Calendar.DAY_OF_WEEK) - calendar.getFirstDayOfWeek();
-        calendar.add(Calendar.DATE, -daysToMonday);
+
+        Calendar firstDayOfWeek = Calendar.getInstance();
+        firstDayOfWeek.setFirstDayOfWeek(Calendar.MONDAY);
+        firstDayOfWeek.setTime(currentDate.getTime());
+        int daysToMonday = firstDayOfWeek.get(Calendar.DAY_OF_WEEK) - firstDayOfWeek.getFirstDayOfWeek();
+        if (daysToMonday < 0) {
+            daysToMonday += 7;
+        }
+        firstDayOfWeek.add(Calendar.DATE, -daysToMonday);
 
         Calendar currentTime = Calendar.getInstance();
         currentTime.setFirstDayOfWeek(Calendar.MONDAY);
-        if (calendar.getTime().after(currentTime.getTime())) {
+        if (firstDayOfWeek.getTime().after(currentTime.getTime())) {
             return;
         }
 
-        boolean pastWeek = true;
-        if (calendar.get(Calendar.WEEK_OF_YEAR) == currentTime.get(Calendar.WEEK_OF_YEAR) &&
-                calendar.get(Calendar.YEAR) == currentTime.get(Calendar.YEAR)) {
-            calendar.setTime(currentTime.getTime());
-            pastWeek = false;
+        Calendar nextWeek = Calendar.getInstance();
+        nextWeek.setTime(firstDayOfWeek.getTime());
+        nextWeek.add(Calendar.DATE, 7);
+
+        boolean pastWeek = !(currentTime.after(firstDayOfWeek) && currentTime.before(nextWeek));
+        if (pastWeek) {
+            currentDate.setTime(firstDayOfWeek.getTime());
+        } else {
+            currentDate.setTime(currentTime.getTime());
         }
 
-        //TODO: Gérer la semaine du mois de décembre/janvier qui n'est pas sur la même année.
-
-        weekDate = calendar.getTime();
+        weekDate = currentDate.getTime();
         clearFragments();
         initialiseWeek(pastWeek);
     }
