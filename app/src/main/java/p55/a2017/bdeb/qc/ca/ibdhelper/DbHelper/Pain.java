@@ -9,17 +9,19 @@ public class Pain {
     private int intensity;
     private EnumPainType painType;
     private String location;
+    private String note;
 
     public Pain() {
     }
 
-    public Pain(long id, int hours, int minutes, int intensity, EnumPainType painType, String location) {
+    public Pain(long id, int hours, int minutes, int intensity, EnumPainType painType, String location, String note) {
         this.id = id;
         this.hours = hours;
         this.minutes = minutes;
         this.intensity = intensity;
         this.painType = painType;
         this.location = location;
+        this.note = note;
     }
 
     public long getId() {
@@ -50,6 +52,10 @@ public class Pain {
         return intensity;
     }
 
+    public String getNote() {
+        return note;
+    }
+
     public void setIntensity(int intensity) {
         this.intensity = intensity;
     }
@@ -68,5 +74,9 @@ public class Pain {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

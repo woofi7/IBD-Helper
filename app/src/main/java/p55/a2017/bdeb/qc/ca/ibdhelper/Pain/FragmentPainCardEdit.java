@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -78,6 +79,7 @@ public class FragmentPainCardEdit extends Fragment {
 
         final SeekBar intensitySkb = rootView.findViewById(R.id.activity_pain_intensity_skb);
         final Spinner painTypeSpr = rootView.findViewById(R.id.activity_pain_type_spr);
+        final EditText noteEtxt = rootView.findViewById(R.id.activity_pain_note_etxt);
         painTypeSpr.setAdapter(new PainTypeAdapter(getContext()));
 
         final LocationArray locationArray;
@@ -92,6 +94,7 @@ public class FragmentPainCardEdit extends Fragment {
             setTime(rootView, calendar.getTime());
             intensitySkb.setProgress(painData.getIntensity());
             painTypeSpr.setSelection(painData.getPainType().ordinal());
+            noteEtxt.setText(painData.getNote());
             Gson gson = new Gson();
             if (painData.getLocation().equals("")) {
                 locationArray = new LocationArray();
@@ -113,6 +116,7 @@ public class FragmentPainCardEdit extends Fragment {
                 pain.setMinutes(hoursMinutes.getMinutes());
                 pain.setIntensity(intensitySkb.getProgress());
                 pain.setPainType((EnumPainType) painTypeSpr.getSelectedItem());
+                pain.setNote(noteEtxt.getText().toString());
                 Gson gson = new Gson();
                 String json = gson.toJson(locationArray);
                 pain.setLocation(json);

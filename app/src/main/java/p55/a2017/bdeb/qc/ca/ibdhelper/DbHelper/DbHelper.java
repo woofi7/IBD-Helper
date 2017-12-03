@@ -39,6 +39,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String PAIN_INTENSITY = "intensity";
     private static final String PAIN_TYPE = "type";
     private static final String PAIN_LOCATION = "location";
+    private static final String PAIN_NOTE = "note";
     private static final String PAIN_ACTIVE = "active";
 
     public static DbHelper getInstance(Context context) {
@@ -69,6 +70,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 + PAIN_INTENSITY + " INTEGER,"
                 + PAIN_TYPE + " INTEGER,"
                 + PAIN_LOCATION + " VARCHAR,"
+                + PAIN_NOTE + " VARCHAR,"
                 + PAIN_ACTIVE + " NUMERIC,"
                 + "FOREIGN KEY (" + PAIN_DAY_ID + ") REFERENCES " + DAY_TABLE + "(" + DAY_ID + ")"
                 + ")";
@@ -110,6 +112,7 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(PAIN_INTENSITY, painData.getIntensity());
         values.put(PAIN_TYPE, painData.getPainType().getId());
         values.put(PAIN_LOCATION, painData.getLocation());
+        values.put(PAIN_NOTE, painData.getNote());
         values.put(PAIN_ACTIVE, true);
         return values;
     }
@@ -139,9 +142,11 @@ public class DbHelper extends SQLiteOpenHelper {
     public void deletePain(long painId) {
         activePain(painId, false);
     }
+
     public void undeletePain(long painId) {
         activePain(painId, true);
     }
+
     public void activePain(long painId, boolean active) {
         SQLiteDatabase db = null;
 
@@ -174,7 +179,8 @@ public class DbHelper extends SQLiteOpenHelper {
                             cursor.getInt(cursor.getColumnIndex(PAIN_TIME_MINUTE)),
                             cursor.getInt(cursor.getColumnIndex(PAIN_INTENSITY)),
                             EnumPainType.fromId(cursor.getInt(cursor.getColumnIndex(PAIN_TYPE))),
-                            cursor.getString(cursor.getColumnIndex(PAIN_LOCATION)));
+                            cursor.getString(cursor.getColumnIndex(PAIN_LOCATION)),
+                            cursor.getString(cursor.getColumnIndex(PAIN_NOTE)));
                     pains.add(pain);
                     cursor.moveToNext();
                 }
@@ -232,7 +238,8 @@ public class DbHelper extends SQLiteOpenHelper {
                         cursor.getInt(cursor.getColumnIndex(PAIN_TIME_MINUTE)),
                         cursor.getInt(cursor.getColumnIndex(PAIN_INTENSITY)),
                         EnumPainType.fromId(cursor.getInt(cursor.getColumnIndex(PAIN_TYPE))),
-                        cursor.getString(cursor.getColumnIndex(PAIN_LOCATION)));
+                        cursor.getString(cursor.getColumnIndex(PAIN_LOCATION)),
+                        cursor.getString(cursor.getColumnIndex(PAIN_NOTE)));
             }
 
             return pain;
