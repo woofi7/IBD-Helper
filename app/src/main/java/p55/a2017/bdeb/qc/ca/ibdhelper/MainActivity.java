@@ -1,5 +1,6 @@
 package p55.a2017.bdeb.qc.ca.ibdhelper;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
+
+import p55.a2017.bdeb.qc.ca.ibdhelper.Pain.PainActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,7 +36,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.activity_main_mnu_about) {
+            openAboutActivity();
+        }
         return true;
+    }
+
+    private void openAboutActivity() {
+        Intent intent = new Intent(this, ActivityAbout.class);
+        startActivity(intent);
     }
 
     private void setDay(EnumDay day) {

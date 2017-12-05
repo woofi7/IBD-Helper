@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">IBD Helper</string>
     <string name="activity_main_day_txt_meal">Repas</string>
     <string name="activity_main_day_txt_toilet">Selles</string>
     <string name="activity_main_day_txt_pain">Douleurs</string>
@@ -30,6 +29,11 @@
     <string name="painType_pinch">Pincement</string>
     <string name="painType_twinge">Élancement</string>
     <string name="activity_main_mnu_about">À propos</string>
-    <string name="activity_pain_delete_undo">Annuler</string>
+    <string name="activity_pain_delete_undo">ANNULER</string>
     <string name="activity_pain_delete_confirm">Supprimé</string>
+    <string name="activity_about_btn_rate">Évaluer</string>
+    <string name="activity_about_btn_close">Fermer</string>
+    <string name="activity_about_txt_version_tag">Version</string>
+    <string name="activity_about_txt_author_tag">Développé par</string>
+    <string name="activity_about_txt_contact_tag">Contacter</string>
 </resources>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">IBD Helper</string>
+    <string name="app_name" translatable="false">IBD Helper</string>
     <string name="activity_main_day_txt_meal">Meal</string>
     <string name="activity_main_day_txt_toilet">Bowel motion</string>
     <string name="activity_main_day_txt_pain">Pain</string>
@@ -31,4 +31,13 @@
     <string name="activity_pain_delete_confirm">Deleted</string>
     <string name="activity_pain_delete_undo">UNDO</string>
     <string name="activity_main_mnu_about">About</string>
+    <string name="title_activity_about" translatable="false">@string/app_name</string>
+    <string name="activity_about_btn_rate">Rate</string>
+    <string name="activity_about_btn_close">Close</string>
+    <string name="activity_about_txt_version_tag">Version</string>
+    <string name="activity_about_txt_author_tag">Developed by</string>
+    <string name="activity_about_txt_author" translatable="false">Nicolas Signori</string>
+    <string name="activity_about_txt_version" translatable="false">v 0.1.0</string>
+    <string name="activity_about_txt_contact_tag">Contact</string>
+    <string name="activity_about_txt_contact" translatable="false">support@someEmail.com</string>
 </resources>
