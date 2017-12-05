@@ -40,4 +40,5 @@
     <string name="activity_about_txt_version" translatable="false">v 0.1.0</string>
     <string name="activity_about_txt_contact_tag">Contact</string>
     <string name="activity_about_txt_contact" translatable="false">support@someEmail.com</string>
+    <string name="activity_about_description">Une petite description décrivant les principales fonctions de l\'application et ce pourquoi elle à été développée.</string>
 </resources>

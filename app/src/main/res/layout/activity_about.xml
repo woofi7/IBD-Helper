@@ -19,7 +19,7 @@
             android:id="@+id/activity_about_txt_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Description de l'application en un petit paragraphe. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis sodales fringilla. Aliquam pellentesque tortor non quam posuere, id faucibus enim dictum. In malesuada metus eget enim iaculis, sit amet elementum diam mattis. " />
+            android:text="@string/activity_about_description" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,7 +31,7 @@
                 android:id="@+id/activity_about_version_tag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="7"
+                android:layout_weight="6"
                 android:text="@string/activity_about_txt_version_tag" />
 
             <TextView
@@ -54,7 +54,7 @@
                 android:id="@+id/activity_about_author_tag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="7"
+                android:layout_weight="6"
                 android:text="@string/activity_about_txt_author_tag" />
 
             <TextView
@@ -76,7 +76,7 @@
                 android:id="@+id/activity_about_contact_tag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="7"
+                android:layout_weight="6"
                 android:text="@string/activity_about_txt_contact_tag" />
 
             <TextView

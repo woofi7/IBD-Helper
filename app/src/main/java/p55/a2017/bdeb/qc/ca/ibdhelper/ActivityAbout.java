@@ -17,7 +17,7 @@ public class ActivityAbout extends AppCompatActivity {
 
         Button closeBtn = findViewById(R.id.activity_about_close);
         Button rateBtn = findViewById(R.id.activity_about_rate);
-        
+
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
