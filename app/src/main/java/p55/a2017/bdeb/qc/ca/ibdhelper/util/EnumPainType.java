@@ -8,9 +8,7 @@ import p55.a2017.bdeb.qc.ca.ibdhelper.R;
 public enum EnumPainType {
     STING(0, R.string.painType_sting),
     CRAMP(1, R.string.painType_cramp),
-    BURN(2, R.string.painType_burn),
-    PINCH(3, R.string.painType_pinch),
-    TWINGE(4, R.string.painType_twinge),
+    BURN(2, R.string.painType_burn)
     ;
 
     private int id;

@@ -30,6 +30,17 @@ public class FragmentPainCardInfo extends Fragment {
     private EventEmitter onClickEdit = new EventEmitter();
     private EventEmitter onClickDelete = new EventEmitter();
 
+    public void setOnEditClickistener(Observer e) {
+        onClickEdit.subscribe(e);
+    }
+    public void setOnDeleteClickistener(Observer e) {
+        onClickDelete.subscribe(e);
+    }
+
+    public FragmentPainCardInfo() {
+
+    }
+
     public static FragmentPainCardInfo newInstance(long painId) {
         FragmentPainCardInfo fragment = new FragmentPainCardInfo();
         Bundle bundle = new Bundle();
@@ -38,23 +49,10 @@ public class FragmentPainCardInfo extends Fragment {
         return fragment;
     }
 
-    public FragmentPainCardInfo() {
-
-    }
-
-    public void setOnEditClickistener(Observer e) {
-        onClickEdit.subscribe(e);
-    }
-
-    public void setOnDeleteClickistener(Observer e) {
-        onClickDelete.subscribe(e);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        long painId = -1;
-
+        long painId;
         if (getArguments() != null) {
             painId = getArguments().getLong(ARG_PAIN_ID);
         } else {

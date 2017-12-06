@@ -1,7 +1,7 @@
 package p55.a2017.bdeb.qc.ca.ibdhelper.Pain;
 
 public class LocationArray {
-    public static final int ARRAY_SIZE = 8;
+    public int ARRAY_SIZE = 8;
     private boolean[][] position = new boolean[ARRAY_SIZE][ARRAY_SIZE];
 
     public int size() {

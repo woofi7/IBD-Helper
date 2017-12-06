@@ -26,6 +26,10 @@ public class DrawingView extends View {
     private boolean eraseState = false;
     private boolean update;
 
+    public void setOnDrawListener(Observer e) {
+        onDraw.subscribe(e);
+    }
+
     private DrawingView(Context context) {
         super(context);
         mPaint = new Paint();
@@ -38,10 +42,6 @@ public class DrawingView extends View {
     public DrawingView(Context context, LocationArray locationArray) {
         this(context);
         this.locationArray = locationArray;
-    }
-
-    public void setOnDrawListener(Observer e) {
-        onDraw.subscribe(e);
     }
 
     @Override

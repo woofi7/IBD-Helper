@@ -41,6 +41,13 @@ public class FragmentPainCardElementList extends Fragment {
 
     }
 
+    public void setOnDeleteListener (Observer e) {
+        onDelete.subscribe(e);
+    }
+    public void setOnDrawListener (Observer e) {
+        onDraw.subscribe(e);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,14 +60,6 @@ public class FragmentPainCardElementList extends Fragment {
         }
 
         changeMode(editMode);
-    }
-
-    public void setOnDeleteListener (Observer e) {
-        onDelete.subscribe(e);
-    }
-
-    public void setOnDrawListener (Observer e) {
-        onDraw.subscribe(e);
     }
 
     @Override

@@ -20,11 +20,9 @@ public class PainTypeAdapter extends ArrayAdapter<EnumPainType> {
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         CheckedTextView text = (CheckedTextView) convertView;
-
-        if (text== null) {
+        if (text == null) {
             text = (CheckedTextView) LayoutInflater.from(getContext()).inflate(android.R.layout.simple_spinner_dropdown_item,  parent, false);
         }
-
         text.setText(getItem(position).getTextRessource());
 
         return text;
@@ -33,11 +31,9 @@ public class PainTypeAdapter extends ArrayAdapter<EnumPainType> {
     @Override
     public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
         CheckedTextView text = (CheckedTextView) convertView;
-
         if (text == null) {
             text = (CheckedTextView) LayoutInflater.from(getContext()).inflate(android.R.layout.simple_spinner_dropdown_item,  parent, false);
         }
-
         text.setText(getItem(position).getTextRessource());
 
         return text;

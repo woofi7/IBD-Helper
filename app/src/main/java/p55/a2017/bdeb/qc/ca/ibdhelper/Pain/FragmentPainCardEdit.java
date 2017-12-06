@@ -40,6 +40,16 @@ public class FragmentPainCardEdit extends Fragment {
 
     private Date hoursMinutes;
 
+    public void setOnSaveClickListener(Observer e) {
+        onClickSave.subscribe(e);
+    }
+    public void setOnDeleteClickListener(Observer e) {
+        onClickDelete.subscribe(e);
+    }
+    public void setOnDrawListener(Observer e) {
+        onDraw.subscribe(e);
+    }
+
     public static FragmentPainCardEdit newInstance(long painId, Date dayTime) {
         FragmentPainCardEdit fragment = new FragmentPainCardEdit();
         Bundle bundle = new Bundle();
@@ -52,17 +62,6 @@ public class FragmentPainCardEdit extends Fragment {
     public FragmentPainCardEdit() {
     }
 
-    public void setOnSaveClickListener(Observer e) {
-        onClickSave.subscribe(e);
-    }
-
-    public void setOnDeleteClickListener(Observer e) {
-        onClickDelete.subscribe(e);
-    }
-
-    public void setOnDrawListener(Observer e) {
-        onDraw.subscribe(e);
-    }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override

@@ -12,10 +12,7 @@ import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 
-import p55.a2017.bdeb.qc.ca.ibdhelper.Pain.PainActivity;
-
 public class MainActivity extends AppCompatActivity {
-
     private FragmentMainElementDay week[];
     private Date weekDate;
 
@@ -47,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Expand the day past in argument and close all the other days.
+     * @param day the enumDay to expand.
+     */
     private void setDay(EnumDay day) {
         for (FragmentMainElementDay dayComponent : week) {
             if (dayComponent.getEnumDay() == day) {
@@ -57,13 +58,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    /**
-     * Initialiser l'ensemble des journées en leur assignant leurs éléments d'interface.
-     */
+
     private void initialiseWeek() {
         initialiseWeek(false);
     }
 
+    /**
+     * Initialise the displayed week using the weekDate. If the weekDate is null, the current
+     * date is used by default. The current day will be expanded.
+     * All the days after the current will be disabled by default. To enable them, pass the pastWeek
+     * at true.
+     * @param pastWeek Enable the days after the current day.
+     */
     private void initialiseWeek (boolean pastWeek) {
         if (weekDate == null) {
             Calendar currentTime = Calendar.getInstance();
@@ -109,6 +115,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Change the week displayed. Swipe on the right to step back one week and left to advance a
+     * week. It can't advance further than the current date.
+     * @param right The swipe direction.
+     */
     private void swipeWeek(boolean right) {
         Calendar currentDate = Calendar.getInstance();
         currentDate.setTime(weekDate);

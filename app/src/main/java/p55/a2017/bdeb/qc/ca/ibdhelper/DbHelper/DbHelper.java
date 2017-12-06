@@ -19,7 +19,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "ibdHelper.db";
     private static final int DBVERSION = 1;
-    private Context context;
     private static DbHelper instance = null;
 
     //Tables
@@ -51,7 +50,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
     private DbHelper(Context context) {
         super(context, DB_NAME, null, DBVERSION);
-        this.context = context;
     }
 
     @Override

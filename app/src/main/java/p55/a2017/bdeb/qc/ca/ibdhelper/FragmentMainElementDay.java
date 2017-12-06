@@ -28,15 +28,15 @@ public class FragmentMainElementDay extends Fragment {
     private static final String ARG_ENABLED = "ENABLED";
     private static final String ARG_EXPANDED = "EXPANDED";
 
+    private EventEmitter onSelected = new EventEmitter();
+    private EventEmitter onSwipe = new EventEmitter();
+
     private ImageView indicator;
     private View group;
     private View groupDay;
     private View groupInfo;
 
     private boolean enabled = true;
-
-    private EventEmitter onSelected = new EventEmitter();
-    private EventEmitter onSwipe = new EventEmitter();
     private float startSwipe;
     private float endSwipe;
 
@@ -165,18 +165,11 @@ public class FragmentMainElementDay extends Fragment {
         return rootView;
     }
 
-
-    /**
-     * Afficher les éléments de la journée.
-     */
     public void expand() {
         this.indicator.setBackgroundResource(R.drawable.ic_expand_less_black_24dp);
         this.groupDay.setVisibility(View.VISIBLE);
     }
 
-    /**
-     * Cacher les éléments de la journée.
-     */
     public void collapse() {
         this.indicator.setBackgroundResource(R.drawable.ic_expand_more_black_24dp);
         this.groupDay.setVisibility(View.GONE);
