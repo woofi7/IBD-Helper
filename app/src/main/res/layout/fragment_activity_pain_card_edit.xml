@@ -190,7 +190,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
 
-                        <RelativeLayout
+                        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_weight="0">
@@ -205,9 +205,9 @@
                                 android:id="@+id/activity_pain_location_img_board"
                                 android:layout_width="206dp"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal"></LinearLayout>
+                                android:orientation="horizontal"/>
 
-                        </RelativeLayout>
+                        </FrameLayout >
 
                         <Space
                             android:layout_width="match_parent"

@@ -3,8 +3,8 @@ package p55.a2017.bdeb.qc.ca.ibdhelper.Pain;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,11 +20,11 @@ public class DrawingView extends View {
     private LocationArray locationArray;
 
     private Paint mPaint;
+
     private Canvas mCanvas;
 
     private boolean drawState = false;
     private boolean eraseState = false;
-    private boolean update;
 
     public void setOnDrawListener(Observer e) {
         onDraw.subscribe(e);
@@ -34,7 +34,7 @@ public class DrawingView extends View {
         super(context);
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-        mPaint.setColor(0xFFFF0000);
+        mPaint.setColor(Color.RED);
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
     }
@@ -52,23 +52,20 @@ public class DrawingView extends View {
     }
 
     @Override
-    public void draw(Canvas canvas) {
-        super.draw(canvas);
-        int cellHeigh = mCanvas.getHeight() / locationArray.size();
-        int cellWidth = mCanvas.getWidth() / locationArray.size();
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        int cellHeigh = (int) Math.ceil(mCanvas.getHeight() / locationArray.size());
+        int cellWidth = (int) Math.ceil(mCanvas.getWidth() / locationArray.size());
         for (int i = 0; i < locationArray.getPosition().length; i++) {
             for (int j = 0; j < locationArray.getPosition()[i].length; j++) {
                 if (locationArray.getPosition()[i][j]) {
-                    Rect rect = new Rect(i* cellWidth,
+                    canvas.drawRect(i * cellWidth,
+                            j * cellHeigh,
+                            i * cellWidth + cellWidth,
                             j * cellHeigh + cellHeigh,
-                            i* cellWidth + cellWidth,
-                            j * cellHeigh);
-                    canvas.drawRect(rect, mPaint);
+                            mPaint);
                 }
             }
-        }
-        if (update) {
-            update = false;
         }
     }
 
