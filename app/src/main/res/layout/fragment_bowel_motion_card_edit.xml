@@ -1,4 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,16 +32,16 @@
                     android:id="@+id/activity_pain_txt_dayTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Midday"
                     android:textColor="#000000"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    tools:text="Midday" />
 
                 <TextView
                     android:id="@+id/activity_pain_txt_hours"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="13h00 - 16h00"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    tools:text="13h00 - 16h00" />
 
             </LinearLayout>
 
@@ -99,19 +100,19 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
                             android:orientation="horizontal">
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:paddingStart="12dp"
                                 android:text="Liquid" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingEnd="8dp"
                                 android:text="Hard" />
                         </LinearLayout>
 
@@ -155,19 +156,19 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
                             android:orientation="horizontal">
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:paddingStart="12dp"
                                 android:text="0" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingEnd="8dp"
                                 android:text="10" />
                         </LinearLayout>
 
@@ -190,55 +191,253 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:gravity="bottom"
-                    android:orientation="horizontal">
+                    android:gravity="end"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/activity_bowel_motion_btn_more"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="7"
-                        android:text="@string/activity_bowel_motion_tag_importance"
-                        android:textSize="14sp" />
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:src="@drawable/ic_expand_more_black_24dp"
+                        app:backgroundTint="@android:color/darker_gray" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/activity_bowel_motion_lyt_more"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="bottom"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="7"
+                            android:text="@string/activity_bowel_motion_tag_importance"
+                            android:textSize="14sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:orientation="vertical">
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:paddingStart="12dp"
+                                    android:text="0" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingEnd="8dp"
+                                    android:text="10" />
+                            </LinearLayout>
+
+                            <SeekBar
+                                android:id="@+id/activity_bowel_motion_skb_importance"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:paddingStart="12dp"
-                                android:text="0" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingEnd="8dp"
-                                android:text="10" />
+                                android:max="10"
+                                android:progress="0"
+                                android:progressDrawable="@drawable/seekbar_progress"
+                                android:splitTrack="false"
+                                android:thumb="@drawable/seekbar_thumb"
+                                tools:layout_editor_absoluteX="16dp"
+                                tools:layout_editor_absoluteY="0dp" />
                         </LinearLayout>
 
-                        <SeekBar
-                            android:id="@+id/activity_bowel_motion_skb_importance"
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:gravity="bottom"
+                        android:orientation="horizontal">
+
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:max="10"
-                            android:progress="0"
-                            android:progressDrawable="@drawable/seekbar_progress"
-                            android:splitTrack="false"
-                            android:thumb="@drawable/seekbar_thumb"
-                            tools:layout_editor_absoluteX="16dp"
-                            tools:layout_editor_absoluteY="0dp" />
+                            android:layout_weight="7"
+                            android:text="@string/activity_bowel_motion_tag_blood"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:paddingStart="12dp"
+                                    android:text="0" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingEnd="8dp"
+                                    android:text="10" />
+                            </LinearLayout>
+
+                            <SeekBar
+                                android:id="@+id/activity_bowel_motion_skb_blood"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:max="10"
+                                android:progress="0"
+                                android:progressDrawable="@drawable/seekbar_progress"
+                                android:splitTrack="false"
+                                android:thumb="@drawable/seekbar_thumb"
+                                tools:layout_editor_absoluteX="16dp"
+                                tools:layout_editor_absoluteY="0dp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:gravity="bottom"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="7"
+                            android:text="@string/activity_main_day_txt_pain"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:paddingStart="12dp"
+                                    android:text="0" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingEnd="8dp"
+                                    android:text="10" />
+                            </LinearLayout>
+
+                            <SeekBar
+                                android:id="@+id/activity_bowel_motion_skb_pain"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:max="10"
+                                android:progress="0"
+                                android:progressDrawable="@drawable/seekbar_progress"
+                                android:splitTrack="false"
+                                android:thumb="@drawable/seekbar_thumb"
+                                tools:layout_editor_absoluteX="16dp"
+                                tools:layout_editor_absoluteY="0dp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:gravity="bottom"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="7"
+                            android:text="@string/activity_bowel_motion_tag_mucus"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:paddingStart="12dp"
+                                    android:text="0" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingEnd="8dp"
+                                    android:text="10" />
+                            </LinearLayout>
+
+                            <SeekBar
+                                android:id="@+id/activity_bowel_motion_skb_mucus"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:max="10"
+                                android:progress="0"
+                                android:progressDrawable="@drawable/seekbar_progress"
+                                android:splitTrack="false"
+                                android:thumb="@drawable/seekbar_thumb"
+                                tools:layout_editor_absoluteX="16dp"
+                                tools:layout_editor_absoluteY="0dp" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -246,174 +445,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:gravity="bottom"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="7"
-                        android:text="@string/activity_bowel_motion_tag_blood"
-                        android:textSize="14sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:paddingStart="12dp"
-                                android:text="0" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingEnd="8dp"
-                                android:text="10" />
-                        </LinearLayout>
-
-                        <SeekBar
-                            android:id="@+id/activity_bowel_motion_skb_blood"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:max="10"
-                            android:progress="0"
-                            android:progressDrawable="@drawable/seekbar_progress"
-                            android:splitTrack="false"
-                            android:thumb="@drawable/seekbar_thumb"
-                            tools:layout_editor_absoluteX="16dp"
-                            tools:layout_editor_absoluteY="0dp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:gravity="bottom"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="7"
-                        android:text="@string/activity_main_day_txt_pain"
-                        android:textSize="14sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:paddingStart="12dp"
-                                android:text="0" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingEnd="8dp"
-                                android:text="10" />
-                        </LinearLayout>
-
-                        <SeekBar
-                            android:id="@+id/activity_bowel_motion_skb_pain"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:max="10"
-                            android:progress="0"
-                            android:progressDrawable="@drawable/seekbar_progress"
-                            android:splitTrack="false"
-                            android:thumb="@drawable/seekbar_thumb"
-                            tools:layout_editor_absoluteX="16dp"
-                            tools:layout_editor_absoluteY="0dp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="bottom"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="7"
-                        android:text="@string/activity_bowel_motion_tag_mucus"
-                        android:textSize="14sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:paddingStart="12dp"
-                                android:text="0" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingEnd="8dp"
-                                android:text="10" />
-                        </LinearLayout>
-
-                        <SeekBar
-                            android:id="@+id/activity_bowel_motion_skb_mucus"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:max="10"
-                            android:progress="0"
-                            android:progressDrawable="@drawable/seekbar_progress"
-                            android:splitTrack="false"
-                            android:thumb="@drawable/seekbar_thumb"
-                            tools:layout_editor_absoluteX="16dp"
-                            tools:layout_editor_absoluteY="0dp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="16dp"
                     android:orientation="horizontal">
 
                     <LinearLayout

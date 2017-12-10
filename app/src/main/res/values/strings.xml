@@ -51,4 +51,5 @@
     <string name="activity_bowel_motion_tag_importance">Importance</string>
     <string name="activity_bowel_motion_tag_blood">Blood</string>
     <string name="activity_bowel_motion_tag_mucus">Mucus</string>
+    <string name="activity_bowel_motion_btn_add_element">Add element</string>
 </resources>
