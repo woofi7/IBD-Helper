@@ -41,4 +41,14 @@
     <string name="activity_about_txt_contact_tag">Contact</string>
     <string name="activity_about_txt_contact" translatable="false">IBDHelper@nsignori.ca</string>
     <string name="activity_about_description">Une petite description décrivant les principales fonctions de l\'application et ce pourquoi elle à été développée.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="activity_bowel_motion_tag_consistency">Conistency</string>
+    <string name="activity_bowel_motion_tag_color">Color</string>
+    <string name="activity_bowel_motion_tag_blood_presence">Presence of blood</string>
+    <string name="activity_bowel_motion_tag_quantity">Quantity</string>
+    <string name="activity_bowel_motion_tag_importance">Importance</string>
+    <string name="activity_bowel_motion_tag_blood">Blood</string>
+    <string name="activity_bowel_motion_tag_mucus">Mucus</string>
 </resources>

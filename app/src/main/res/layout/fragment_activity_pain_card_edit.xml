@@ -31,8 +31,9 @@
                     android:id="@+id/activity_pain_txt_dayTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Midday"
                     android:textColor="#000000"
-                    android:textSize="24sp"/>
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/activity_pain_txt_hours"
