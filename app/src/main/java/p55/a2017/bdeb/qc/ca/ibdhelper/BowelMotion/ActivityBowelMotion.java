@@ -71,7 +71,7 @@ public class ActivityBowelMotion extends AppCompatActivity {
             editMode = EnumEditMode.INFO;
         }
 
-        final FragmentPainCardElementList fragment = FragmentPainCardElementList.newInstance(editMode, bowelMotionId, dayDate);
+        final FragmentBowelMotionCardElementList fragment = FragmentBowelMotionCardElementList.newInstance(editMode, bowelMotionId, dayDate);
         fragment.setOnDeleteListener(new Observer() {
             @Override
             public void update(Observable o, final Object arg) {
