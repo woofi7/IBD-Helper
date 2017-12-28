@@ -1,4 +1,4 @@
-package p55.a2017.bdeb.qc.ca.ibdhelper.Pain;
+package p55.a2017.bdeb.qc.ca.ibdhelper.BowelMotion;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,9 +15,11 @@ import java.util.Observable;
 import java.util.Observer;
 
 import p55.a2017.bdeb.qc.ca.ibdhelper.DbHelper.DbHelper;
+import p55.a2017.bdeb.qc.ca.ibdhelper.Pain.FragmentPainCardElementList;
 import p55.a2017.bdeb.qc.ca.ibdhelper.R;
+import p55.a2017.bdeb.qc.ca.ibdhelper.util.EnumEditMode;
 
-public class PainActivity extends AppCompatActivity {
+public class ActivityBowelMotion extends AppCompatActivity {
     public static final String EXTRA_DATE = "DATE";
     private Date dayDate;
 
@@ -34,7 +36,7 @@ public class PainActivity extends AppCompatActivity {
         dayDate = (Date) getIntent().getSerializableExtra(EXTRA_DATE);
         this.setTitle(this.getTitle() + " (" + SimpleDateFormat.getDateInstance().format(dayDate) + ")");
 
-        setContentView(R.layout.activity_pain);
+        setContentView(R.layout.activity_bowel_motion);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -42,7 +44,7 @@ public class PainActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        FloatingActionButton newCardButton = findViewById(R.id.activity_pain_fab_newCard);
+        FloatingActionButton newCardButton = findViewById(R.id.activity_bowel_motion_fab_newCard);
         newCardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,32 +58,32 @@ public class PainActivity extends AppCompatActivity {
                     .commit();
         }
 
-        List<Long> painIds = DbHelper.getInstance(this).loadPainDataId(dayDate);
+        List<Long> bMotionIds = DbHelper.getInstance(this).loadBowelMotionDataId(dayDate);
 
-        for (Long painId : painIds) {
+        for (Long painId : bMotionIds) {
             addCard(painId);
         }
     }
 
-    private void addCard(long painId) {
-        FragmentPainCardElementList.EditMode editMode = FragmentPainCardElementList.EditMode.EDIT;
-        if (painId > 0) {
-            editMode = FragmentPainCardElementList.EditMode.INFO;
+    private void addCard(long bowelMotionId) {
+        EnumEditMode editMode = EnumEditMode.EDIT;
+        if (bowelMotionId > 0) {
+            editMode = EnumEditMode.INFO;
         }
 
-        final FragmentPainCardElementList fragment = FragmentPainCardElementList.newInstance(editMode, painId, dayDate);
+        final FragmentPainCardElementList fragment = FragmentPainCardElementList.newInstance(editMode, bowelMotionId, dayDate);
         fragment.setOnDeleteListener(new Observer() {
             @Override
             public void update(Observable o, final Object arg) {
-                DbHelper.getInstance(PainActivity.this).deletePain((Long) arg);
+                DbHelper.getInstance(ActivityBowelMotion.this).deleteBowelMotion((Long) arg);
                 getSupportFragmentManager().beginTransaction()
                         .remove(fragment)
                         .commit();
-                Snackbar snackbar = Snackbar.make(PainActivity.this.findViewById(R.id.activity_pain_main), R.string.activity_pain_delete_confirm, Snackbar.LENGTH_LONG);
+                Snackbar snackbar = Snackbar.make(ActivityBowelMotion.this.findViewById(R.id.activity_bowel_motion_main), R.string.activity_pain_delete_confirm, Snackbar.LENGTH_LONG);
                 snackbar.setAction(R.string.activity_pain_delete_undo, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        DbHelper.getInstance(PainActivity.this).undeletePain((Long) arg);
+                        DbHelper.getInstance(ActivityBowelMotion.this).undeleteBowelMotion((Long) arg);
                         addCard((Long) arg);
                     }
                 });
@@ -89,21 +91,8 @@ public class PainActivity extends AppCompatActivity {
 
             }
         });
-        fragment.setOnDrawListener(new Observer() {
-            @Override
-            public void update(Observable observable, Object o) {
-                CustomScrollView scrollView = findViewById(R.id.activity_pain_main);
-
-                if ((Boolean) o) {
-                    scrollView.enableScrolling();
-                }
-                else {
-                    scrollView.disableScrolling();
-                }
-            }
-        });
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_activity_pain_card_list, fragment)
+                .add(R.id.fragment_activity_bowel_motion_card_list, fragment)
                 .commit();
     }
 }

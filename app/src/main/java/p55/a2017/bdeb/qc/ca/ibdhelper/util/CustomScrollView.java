@@ -1,4 +1,4 @@
-package p55.a2017.bdeb.qc.ca.ibdhelper.Pain;
+package p55.a2017.bdeb.qc.ca.ibdhelper.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

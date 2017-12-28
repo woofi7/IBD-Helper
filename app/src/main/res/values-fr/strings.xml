@@ -36,4 +36,13 @@
     <string name="activity_about_txt_version_tag">Version</string>
     <string name="activity_about_txt_author_tag">Développé par</string>
     <string name="activity_about_txt_contact_tag">Contacter</string>
+    <string name="activity_bowel_motion_tag_consistency">Consistance</string>
+    <string name="activity_bowel_motion_tag_color">Couleur</string>
+    <string name="activity_bowel_motion_tag_blood_presence">Présence de sang</string>
+    <string name="activity_bowel_motion_tag_quantity">Quantité</string>
+    <string name="activity_bowel_motion_tag_importance">Importance</string>
+    <string name="activity_bowel_motion_tag_blood">Sang</string>
+    <string name="activity_bowel_motion_tag_mucus">Mucus</string>
+    <string name="activity_bowel_motion_btn_add_element">Ajouter un élément</string>
+    <string name="activity_bowel_motion_icon_description">Toilette</string>
 </resources>

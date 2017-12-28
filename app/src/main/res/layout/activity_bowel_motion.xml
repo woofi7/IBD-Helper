@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="p55.a2017.bdeb.qc.ca.ibdhelper.Pain.ActivityPain">
+    tools:context="p55.a2017.bdeb.qc.ca.ibdhelper.BowelMotion.ActivityBowelMotion">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -23,44 +23,44 @@
     <p55.a2017.bdeb.qc.ca.ibdhelper.util.CustomScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/activity_pain_main"
+        android:id="@+id/activity_bowel_motion_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/backgroundColor"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="p55.a2017.bdeb.qc.ca.ibdhelper.Pain.ActivityPain"
-        tools:showIn="@layout/activity_pain">
+        tools:context="p55.a2017.bdeb.qc.ca.ibdhelper.BowelMotion.ActivityBowelMotion"
+        tools:showIn="@layout/activity_bowel_motion">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/activity_pain_img_icon"
+                android:id="@+id/activity_bowel_motion_img_icon"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:contentDescription="@string/activity_pain_icon_description"
+                android:contentDescription="@string/activity_bowel_motion_icon_description"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/pain_black" />
+                app:srcCompat="@drawable/toilet_black" />
 
             <TextView
-                android:id="@+id/activity_pain_txt_title"
+                android:id="@+id/activity_bowel_motion_txt_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/title_activity_pain"
+                android:text="@string/title_activity_bowel_motion"
                 android:textAlignment="viewStart"
                 android:textSize="42sp"
-                app:layout_constraintBottom_toBottomOf="@+id/activity_pain_img_icon"
-                app:layout_constraintStart_toEndOf="@+id/activity_pain_img_icon"
-                app:layout_constraintTop_toTopOf="@+id/activity_pain_img_icon" />
+                app:layout_constraintBottom_toBottomOf="@+id/activity_bowel_motion_img_icon"
+                app:layout_constraintStart_toEndOf="@+id/activity_bowel_motion_img_icon"
+                app:layout_constraintTop_toTopOf="@+id/activity_bowel_motion_img_icon" />
 
             <LinearLayout
-                android:id="@+id/fragment_activity_pain_card_list"
+                android:id="@+id/fragment_activity_bowel_motion_card_list"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -74,14 +74,14 @@
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_pain_img_icon">
+                app:layout_constraintTop_toBottomOf="@+id/activity_bowel_motion_img_icon">
 
             </LinearLayout>
         </android.support.constraint.ConstraintLayout>
     </p55.a2017.bdeb.qc.ca.ibdhelper.util.CustomScrollView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/activity_pain_fab_newCard"
+        android:id="@+id/activity_bowel_motion_fab_newCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

@@ -19,7 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Observer;
 
-import p55.a2017.bdeb.qc.ca.ibdhelper.Pain.PainActivity;
+import p55.a2017.bdeb.qc.ca.ibdhelper.BowelMotion.ActivityBowelMotion;
+import p55.a2017.bdeb.qc.ca.ibdhelper.Pain.ActivityPain;
 import p55.a2017.bdeb.qc.ca.ibdhelper.util.EventEmitter;
 
 public class FragmentMainElementDay extends Fragment {
@@ -109,6 +110,7 @@ public class FragmentMainElementDay extends Fragment {
             }
         });
 
+        final Date finalDayDate = dayDate;
         mealBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,17 +122,17 @@ public class FragmentMainElementDay extends Fragment {
         toiletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Open bowel motion activity", Toast.LENGTH_SHORT).show();
-                //TODO: Make the bowel motion module
+                Intent intent = new Intent(groupInfo.getContext(), ActivityBowelMotion.class);
+                intent.putExtra(ActivityPain.EXTRA_DATE, finalDayDate);
+                groupInfo.getContext().startActivity(intent);
             }
         });
 
-        final Date finalDayDate = dayDate;
         painBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(groupInfo.getContext(), PainActivity.class);
-                intent.putExtra(PainActivity.EXTRA_DATE, finalDayDate);
+                Intent intent = new Intent(groupInfo.getContext(), ActivityPain.class);
+                intent.putExtra(ActivityPain.EXTRA_DATE, finalDayDate);
                 groupInfo.getContext().startActivity(intent);
             }
         });

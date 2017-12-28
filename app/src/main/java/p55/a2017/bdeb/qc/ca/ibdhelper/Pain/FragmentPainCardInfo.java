@@ -1,21 +1,18 @@
 package p55.a2017.bdeb.qc.ca.ibdhelper.Pain;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 
 import java.util.Calendar;
-import java.util.Observable;
 import java.util.Observer;
 
 import p55.a2017.bdeb.qc.ca.ibdhelper.DbHelper.DbHelper;
@@ -62,7 +59,7 @@ public class FragmentPainCardInfo extends Fragment {
         final Pain painData = DbHelper.getInstance(getContext()).loadPain(painId);
         assert painData != null;
 
-        final View rootView = inflater.inflate(R.layout.fragment_activity_pain_card_info, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_pain_card_info, container, false);
 
         Button editBtn = rootView.findViewById(R.id.activity_pain_info_btn_edit);
         Button deleteBtn = rootView.findViewById(R.id.activity_pain_info_btn_delete);

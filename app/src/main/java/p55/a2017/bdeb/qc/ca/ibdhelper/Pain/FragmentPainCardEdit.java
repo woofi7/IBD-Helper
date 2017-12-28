@@ -74,7 +74,7 @@ public class FragmentPainCardEdit extends Fragment {
             dayTime = new Date(getArguments().getLong(ARG_DAY_TIME));
         }
 
-        final View rootView = inflater.inflate(R.layout.fragment_activity_pain_card_edit, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_pain_card_edit, container, false);
 
         final SeekBar intensitySkb = rootView.findViewById(R.id.activity_pain_intensity_skb);
         final Spinner painTypeSpr = rootView.findViewById(R.id.activity_pain_type_spr);

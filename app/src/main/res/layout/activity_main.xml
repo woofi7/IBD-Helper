@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="p55.a2017.bdeb.qc.ca.ibdhelper.MainActivity">
+    tools:context="p55.a2017.bdeb.qc.ca.ibdhelper.ActivityMain">
 
     <LinearLayout
         android:id="@+id/activity_main_group_weeklayout"

@@ -28,9 +28,6 @@
     <string name="activity_pain_card_btn_delete_txt">Delete</string>
     <string name="activity_pain_card_btn_save_txt">Save</string>
     <string name="activity_pain_card_btn_edit_txt">Edit</string>
-    <string name="activity_pain_delete_confirm">Deleted</string>
-    <string name="activity_pain_delete_undo">UNDO</string>
-    <string name="activity_main_mnu_about">About</string>
     <string name="title_activity_about" translatable="false">@string/app_name</string>
     <string name="activity_about_btn_rate">Rate</string>
     <string name="activity_about_btn_close">Close</string>
@@ -41,9 +38,6 @@
     <string name="activity_about_txt_contact_tag">Contact</string>
     <string name="activity_about_txt_contact" translatable="false">IBDHelper@nsignori.ca</string>
     <string name="activity_about_description">Une petite description décrivant les principales fonctions de l\'application et ce pourquoi elle à été développée.</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="activity_bowel_motion_tag_consistency">Conistency</string>
     <string name="activity_bowel_motion_tag_color">Color</string>
     <string name="activity_bowel_motion_tag_blood_presence">Presence of blood</string>
@@ -52,4 +46,9 @@
     <string name="activity_bowel_motion_tag_blood">Blood</string>
     <string name="activity_bowel_motion_tag_mucus">Mucus</string>
     <string name="activity_bowel_motion_btn_add_element">Add element</string>
+    <string name="activity_bowel_motion_icon_description">Toilet</string>
+    <string name="title_activity_bowel_motion">Bowel Motion</string>
+    <string name="activity_pain_delete_undo">UNDO</string>
+    <string name="activity_pain_delete_confirm">Deleted</string>
+    <string name="activity_main_mnu_about">About</string>
 </resources>

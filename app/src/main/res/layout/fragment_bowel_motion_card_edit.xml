@@ -22,14 +22,14 @@
             android:paddingTop="24dp">
 
             <LinearLayout
-                android:id="@+id/activity_pain_lyt_time"
+                android:id="@+id/activity_bowel_motion_lyt_time"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/activity_pain_txt_dayTime"
+                    android:id="@+id/activity_bowel_motion_txt_dayTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
@@ -37,7 +37,7 @@
                     tools:text="Midday" />
 
                 <TextView
-                    android:id="@+id/activity_pain_txt_hours"
+                    android:id="@+id/activity_bowel_motion_txt_hours"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textSize="14sp"
@@ -455,14 +455,14 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/activity_pain_note_txt"
+                            android:id="@+id/activity_bowel_motion_note_txt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Note" />
 
                         <EditText
-                            android:id="@+id/activity_pain_note_etxt"
+                            android:id="@+id/activity_bowel_motion_note_etxt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -503,7 +503,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/activity_pain_btn_delete"
+                        android:id="@+id/activity_bowel_motion_btn_delete"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -518,7 +518,7 @@
                         android:src="@color/backgroundColor" />
 
                     <Button
-                        android:id="@+id/activity_pain_btn_save"
+                        android:id="@+id/activity_bowel_motion_btn_save"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

@@ -1,4 +1,4 @@
-package p55.a2017.bdeb.qc.ca.ibdhelper.Pain;
+package p55.a2017.bdeb.qc.ca.ibdhelper.BowelMotion;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,23 +14,22 @@ import p55.a2017.bdeb.qc.ca.ibdhelper.R;
 import p55.a2017.bdeb.qc.ca.ibdhelper.util.EnumEditMode;
 import p55.a2017.bdeb.qc.ca.ibdhelper.util.EventEmitter;
 
-public class FragmentPainCardElementList extends Fragment {
+public class FragmentBowelMotionCardElementList extends Fragment {
     private static final String ARG_EDIT_MODE = "EDIT_MODE";
-    private static final String ARG_PAIN_ID = "PAIN_ID";
+    private static final String ARG_BOWEL_MOTION_ID = "BOWEL_MOTION_ID";
     private static final String ARG_DAY_TIME = "DAY_TIME";
 
     private EventEmitter onDelete = new EventEmitter();
-    private EventEmitter onDraw = new EventEmitter();
-    private long painId = -1;
+    private long bowelMotionId = -1;
 
-    public FragmentPainCardElementList() {
+    public FragmentBowelMotionCardElementList() {
     }
 
-    public static FragmentPainCardElementList newInstance(EnumEditMode editMode, long painId, Date dayTime) {
-        FragmentPainCardElementList fragment = new FragmentPainCardElementList();
+    public static FragmentBowelMotionCardElementList newInstance(EnumEditMode editMode, long bowelMotionId, Date dayTime) {
+        FragmentBowelMotionCardElementList fragment = new FragmentBowelMotionCardElementList();
         Bundle bundle = new Bundle();
         bundle.putString(ARG_EDIT_MODE, editMode.name());
-        bundle.putLong(ARG_PAIN_ID, painId);
+        bundle.putLong(ARG_BOWEL_MOTION_ID, bowelMotionId);
         bundle.putLong(ARG_DAY_TIME, dayTime.getTime());
         fragment.setArguments(bundle);
         return fragment;
@@ -40,9 +39,6 @@ public class FragmentPainCardElementList extends Fragment {
     public void setOnDeleteListener (Observer e) {
         onDelete.subscribe(e);
     }
-    public void setOnDrawListener (Observer e) {
-        onDraw.subscribe(e);
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,7 +46,7 @@ public class FragmentPainCardElementList extends Fragment {
 
         EnumEditMode editMode = EnumEditMode.INFO;
         if (getArguments() != null) {
-            painId = getArguments().getLong(ARG_PAIN_ID);
+            bowelMotionId = getArguments().getLong(ARG_BOWEL_MOTION_ID);
             String editModeStr = getArguments().getString(ARG_EDIT_MODE);
             editMode = EnumEditMode.valueOf(editModeStr);
         }
@@ -61,7 +57,7 @@ public class FragmentPainCardElementList extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_pain_card_element_list, container, false);
+        return inflater.inflate(R.layout.fragment_bowel_motion_card_element_list, container, false);
     }
 
     public void changeMode(EnumEditMode edit) {
@@ -69,32 +65,26 @@ public class FragmentPainCardElementList extends Fragment {
 
         if (edit == EnumEditMode.EDIT) {
 
-            FragmentPainCardEdit fragmentEdit = FragmentPainCardEdit.newInstance(painId, new Date(getArguments().getLong(ARG_DAY_TIME)));
+            FragmentBowelMotionCardEdit fragmentEdit = FragmentBowelMotionCardEdit.newInstance(bowelMotionId, new Date(getArguments().getLong(ARG_DAY_TIME)));
             fragmentEdit.setOnSaveClickListener(new Observer() {
                 @Override
                 public void update(Observable o, Object arg) {
-                    painId = (Long) arg;
-                    getArguments().putLong(ARG_PAIN_ID, painId);
+                    bowelMotionId = (Long) arg;
+                    getArguments().putLong(ARG_BOWEL_MOTION_ID, bowelMotionId);
                     changeMode(EnumEditMode.INFO);
                 }
             });
             fragmentEdit.setOnDeleteClickListener(new Observer() {
                 @Override
                 public void update(Observable o, Object arg) {
-                    onDelete.next(painId);
-                }
-            });
-            fragmentEdit.setOnDrawListener(new Observer() {
-                @Override
-                public void update(Observable observable, Object o) {
-                    onDraw.next(o);
+                    onDelete.next(bowelMotionId);
                 }
             });
             getChildFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_pain_card_element_list, fragmentEdit)
+                    .replace(R.id.fragment_bowel_motion_card_element_list, fragmentEdit)
                     .commit();
         } else if (edit == EnumEditMode.INFO) {
-            FragmentPainCardInfo fragmentInfo = FragmentPainCardInfo.newInstance(painId);
+            FragmentBowelMotionCardInfo fragmentInfo = FragmentBowelMotionCardInfo.newInstance(bowelMotionId);
 
             fragmentInfo.setOnEditClickistener(new Observer() {
                 @Override
@@ -105,11 +95,11 @@ public class FragmentPainCardElementList extends Fragment {
             fragmentInfo.setOnDeleteClickistener(new Observer() {
                 @Override
                 public void update(Observable o, Object arg) {
-                    onDelete.next(painId);
+                    onDelete.next(bowelMotionId);
                 }
             });
             getChildFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_pain_card_element_list, fragmentInfo)
+                    .replace(R.id.fragment_bowel_motion_card_element_list, fragmentInfo)
                     .commit();
         }
     }

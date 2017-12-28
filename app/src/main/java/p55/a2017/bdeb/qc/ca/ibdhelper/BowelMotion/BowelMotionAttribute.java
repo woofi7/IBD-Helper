@@ -5,7 +5,7 @@ import android.content.Context;
 import p55.a2017.bdeb.qc.ca.ibdhelper.R;
 
 public enum BowelMotionAttribute {
-    COLOR(0, AttributeType.SELECT_LIST, R.string.activity_bowel_motion_tag_color, null, null, null, true),
+    COLOR(0, AttributeType.SELECT_LIST, R.string.activity_bowel_motion_tag_color, true),
     CONSISTENCY(1, AttributeType.PROGRESS_BAR, R.string.activity_bowel_motion_tag_consistency, "0", "20", "10", true),
     QUANTITY(2, AttributeType.PROGRESS_BAR, R.string.activity_bowel_motion_tag_quantity, "0", "10", "5", true),
     IMPORTANCE(3, AttributeType.PROGRESS_BAR, R.string.activity_bowel_motion_tag_importance, "0", "10", "0", false),
@@ -22,13 +22,22 @@ public enum BowelMotionAttribute {
     private String currentValue;
     private boolean display;
 
-    BowelMotionAttribute(int id, AttributeType type, int text, String minValue, String maxValue, String currentValue, boolean display) {
+    BowelMotionAttribute(int id, AttributeType type, int text, String minValue, String maxValue,
+                         String currentValue, boolean display) {
         this.id = id;
         this.type = type;
         this.text = text;
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.currentValue = currentValue;
+        this.display = display;
+    }
+
+
+    BowelMotionAttribute(int id, AttributeType type, int text, boolean display) {
+        this.id = id;
+        this.type = type;
+        this.text = text;
         this.display = display;
     }
 

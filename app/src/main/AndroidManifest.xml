@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".ActivityMain">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,8 +17,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Pain.PainActivity"
+            android:name=".Pain.ActivityPain"
             android:label="@string/title_activity_pain"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BowelMotion.ActivityBowelMotion"
+            android:label="@string/title_activity_bowel_motion"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActivityAbout"

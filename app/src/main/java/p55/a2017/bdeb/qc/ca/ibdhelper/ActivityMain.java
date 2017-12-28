@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 
-public class MainActivity extends AppCompatActivity {
+public class ActivityMain extends AppCompatActivity {
     private FragmentMainElementDay week[];
     private Date weekDate;
 
@@ -93,7 +93,8 @@ public class MainActivity extends AppCompatActivity {
             calendar.add(Calendar.DATE, difference);
             long time = calendar.getTime().getTime();
 
-            FragmentMainElementDay fragment = FragmentMainElementDay.newInstance(enumDay, time, pastWeek || difference <= 0, currentDay == enumDay);
+            FragmentMainElementDay fragment = FragmentMainElementDay.newInstance(enumDay,
+                    time, pastWeek || difference <= 0, currentDay == enumDay);
             fragment.setOnSelectListener(new Observer() {
                 @Override
                 public void update(Observable o, Object arg) {

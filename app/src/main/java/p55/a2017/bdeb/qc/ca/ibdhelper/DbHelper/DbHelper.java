@@ -16,20 +16,37 @@ import java.util.List;
 import p55.a2017.bdeb.qc.ca.ibdhelper.util.EnumPainType;
 
 public class DbHelper extends SQLiteOpenHelper {
-
     private static final String DB_NAME = "ibdHelper.db";
     private static final int DBVERSION = 1;
     private static DbHelper instance = null;
 
-    //Tables
+    //Day
     private static final String DAY_TABLE = "day";
-    private static final String PAIN_TABLE = "pain";
-    private static final String MEAL_TABLE = "meal";
-    private static final String BOWEL_MOVEMENT_TABLE = "bowelMovement";
 
-    //Columns
     private static final String DAY_ID = "_id";
     private static final String DAY_DATE = "date";
+
+    //Meal
+    private static final String MEAL_TABLE = "meal";
+
+
+    //Bowel Motion
+    private static final String BOWEL_MOTION_TABLE = "bowelMotion";
+
+    private static final String BOWEL_MOTION_ID = "_id";
+    private static final String BOWEL_MOTION_DAY_ID = "day_id";
+    private static final String BOWEL_MOTION_COLOR = "color";
+    private static final String BOWEL_MOTION_CONSISTENCY = "consistency";
+    private static final String BOWEL_MOTION_QUANTITY = "quantity";
+    private static final String BOWEL_MOTION_IMPORTANCE = "importance";
+    private static final String BOWEL_MOTION_BLOOD = "blood";
+    private static final String BOWEL_MOTION_PAIN = "pain";
+    private static final String BOWEL_MOTION_MUCUS = "mucus";
+    private static final String BOWEL_MOTION_NOTE = "note";
+    private static final String BOWEL_MOTION_ACTIVE = "active";
+
+    //Pain
+    private static final String PAIN_TABLE = "pain";
 
     private static final String PAIN_ID = "_id";
     private static final String PAIN_DAY_ID = "day_id";
@@ -73,6 +90,22 @@ public class DbHelper extends SQLiteOpenHelper {
                 + "FOREIGN KEY (" + PAIN_DAY_ID + ") REFERENCES " + DAY_TABLE + "(" + DAY_ID + ")"
                 + ")";
         db.execSQL(sqlPain);
+
+        String sqlBowelMotion = "CREATE TABLE " + BOWEL_MOTION_TABLE + "("
+                + BOWEL_MOTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + BOWEL_MOTION_DAY_ID + " INTEGER,"
+                + BOWEL_MOTION_COLOR + " VARCHAR,"
+                + BOWEL_MOTION_CONSISTENCY + " INTEGER,"
+                + BOWEL_MOTION_QUANTITY + " INTEGER,"
+                + BOWEL_MOTION_IMPORTANCE + " INTEGER,"
+                + BOWEL_MOTION_BLOOD + " INTEGER,"
+                + BOWEL_MOTION_PAIN + " INTEGER,"
+                + BOWEL_MOTION_MUCUS + " INTEGER,"
+                + BOWEL_MOTION_NOTE + " VARCHAR,"
+                + BOWEL_MOTION_ACTIVE + " NUMERIC,"
+                + "FOREIGN KEY (" + BOWEL_MOTION_DAY_ID + ") REFERENCES " + DAY_TABLE + "(" + DAY_ID + ")"
+                + ")";
+        db.execSQL(sqlBowelMotion);
     }
 
     @Override
@@ -115,6 +148,21 @@ public class DbHelper extends SQLiteOpenHelper {
         return values;
     }
 
+    @NonNull
+    private ContentValues prepareBowelMotionQuery(BowelMotion bowelMotionData) {
+        ContentValues values = new ContentValues();
+        values.put(BOWEL_MOTION_COLOR, bowelMotionData.getColor());
+        values.put(BOWEL_MOTION_CONSISTENCY, bowelMotionData.getConsistency());
+        values.put(BOWEL_MOTION_QUANTITY, bowelMotionData.getQuantity());
+        values.put(BOWEL_MOTION_IMPORTANCE, bowelMotionData.getImportance());
+        values.put(BOWEL_MOTION_BLOOD, bowelMotionData.getBlood());
+        values.put(BOWEL_MOTION_PAIN, bowelMotionData.getPain());
+        values.put(BOWEL_MOTION_MUCUS, bowelMotionData.getMucus());
+        values.put(BOWEL_MOTION_NOTE, bowelMotionData.getNote());
+        values.put(BOWEL_MOTION_ACTIVE, true);
+        return values;
+    }
+
     public void savePain(Pain painData, Date dayDate) {
         SQLiteDatabase db = null;
 
@@ -137,12 +185,42 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void saveBowelMotion(BowelMotion bowelMotionData, Date dayDate) {
+        SQLiteDatabase db = null;
+
+        try {
+            ContentValues values = prepareBowelMotionQuery(bowelMotionData);
+            if (bowelMotionData.getId() == -1) {
+                values.put(BOWEL_MOTION_DAY_ID, getDayId(dayDate));
+                db = this.getWritableDatabase();
+
+                long id = db.insert(BOWEL_MOTION_TABLE, null, values);
+                bowelMotionData.setId(id);
+
+            } else {
+                db = this.getWritableDatabase();
+                db.update(BOWEL_MOTION_TABLE, values, BOWEL_MOTION_ID + " = ?", new String[]{String.valueOf(bowelMotionData.getId())});
+            }
+        } finally {
+            if (db != null)
+                db.close();
+        }
+    }
+
     public void deletePain(long painId) {
         activePain(painId, false);
     }
 
+    public void deleteBowelMotion(long bowelMotionId) {
+        activeBowelMotion(bowelMotionId, false);
+    }
+
     public void undeletePain(long painId) {
         activePain(painId, true);
+    }
+
+    public void undeleteBowelMotion(long bowelMotionId) {
+        activeBowelMotion(bowelMotionId, true);
     }
 
     public void activePain(long painId, boolean active) {
@@ -160,35 +238,16 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
-    public List<Pain> loadPainData(Date dayDate) {
+    public void activeBowelMotion(long bowelMotionId, boolean active) {
         SQLiteDatabase db = null;
-        Cursor cursor = null;
 
-        long dayId = getDayId(dayDate);
         try {
-            db = this.getReadableDatabase();
-            cursor = db.rawQuery("select * from " + PAIN_TABLE + " where " + PAIN_DAY_ID + " = " + dayId, null);
-            ArrayList<Pain> pains = new ArrayList<>();
-            if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
-                    Pain pain = new Pain(
-                            cursor.getLong(cursor.getColumnIndex(PAIN_ID)),
-                            cursor.getInt(cursor.getColumnIndex(PAIN_TIME_HOUR)),
-                            cursor.getInt(cursor.getColumnIndex(PAIN_TIME_MINUTE)),
-                            cursor.getInt(cursor.getColumnIndex(PAIN_INTENSITY)),
-                            EnumPainType.fromId(cursor.getInt(cursor.getColumnIndex(PAIN_TYPE))),
-                            cursor.getString(cursor.getColumnIndex(PAIN_LOCATION)),
-                            cursor.getString(cursor.getColumnIndex(PAIN_NOTE)));
-                    pains.add(pain);
-                    cursor.moveToNext();
-                }
-            }
+            db = this.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(BOWEL_MOTION_ACTIVE, active);
 
-            return pains;
-        }
-        finally {
-            if (cursor != null)
-                cursor.close();
+            db.update(BOWEL_MOTION_TABLE, values, BOWEL_MOTION_ID + " = ?", new String[]{String.valueOf(bowelMotionId)});
+        } finally {
             if (db != null)
                 db.close();
         }
@@ -220,6 +279,32 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
+    public List<Long> loadBowelMotionDataId(Date dayDate) {
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+
+        long dayId = getDayId(dayDate);
+        try {
+            db = this.getReadableDatabase();
+            cursor = db.rawQuery("select * from " + BOWEL_MOTION_TABLE + " where " + BOWEL_MOTION_DAY_ID + " = " + dayId + " and " + BOWEL_MOTION_ACTIVE + " = 1", null);
+            ArrayList<Long> bowelMotionIds = new ArrayList<>();
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    bowelMotionIds.add(cursor.getLong(cursor.getColumnIndex(BOWEL_MOTION_ID)));
+                    cursor.moveToNext();
+                }
+            }
+
+            return bowelMotionIds;
+        }
+        finally {
+            if (cursor != null)
+                cursor.close();
+            if (db != null)
+                db.close();
+        }
+    }
+
     @Nullable
     public Pain loadPain(long painId) {
         SQLiteDatabase db = null;
@@ -241,6 +326,41 @@ public class DbHelper extends SQLiteOpenHelper {
             }
 
             return pain;
+        }
+        finally {
+            if (cursor != null)
+                cursor.close();
+            if (db != null)
+                db.close();
+        }
+    }
+
+    @Nullable
+    public BowelMotion loadBowelMotion(long bowelMotionId) {
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+
+        try {
+            db = this.getReadableDatabase();
+            cursor = db.rawQuery("select * from " + BOWEL_MOTION_TABLE + " where " + BOWEL_MOTION_ID + " = " + bowelMotionId, null);
+            BowelMotion bowelMotion = null;
+            if (cursor.moveToFirst()) {
+                bowelMotion = new BowelMotion(
+                        cursor.getLong(cursor.getColumnIndex(BOWEL_MOTION_ID)),
+                        cursor.getInt(cursor.getColumnIndex(PAIN_TIME_HOUR)),
+                        cursor.getInt(cursor.getColumnIndex(PAIN_TIME_MINUTE)),
+                        cursor.getString(cursor.getColumnIndex(BOWEL_MOTION_COLOR)),
+                        cursor.getInt(cursor.getColumnIndex(BOWEL_MOTION_CONSISTENCY)),
+                        cursor.getInt(cursor.getColumnIndex(BOWEL_MOTION_QUANTITY)),
+                        cursor.getInt(cursor.getColumnIndex(BOWEL_MOTION_IMPORTANCE)),
+                        cursor.getInt(cursor.getColumnIndex(BOWEL_MOTION_BLOOD)),
+                        cursor.getInt(cursor.getColumnIndex(BOWEL_MOTION_PAIN)),
+                        cursor.getInt(cursor.getColumnIndex(BOWEL_MOTION_MUCUS)),
+                        cursor.getString(cursor.getColumnIndex(BOWEL_MOTION_NOTE))
+                );
+            }
+
+            return bowelMotion;
         }
         finally {
             if (cursor != null)
